@@ -51,36 +51,43 @@
             // 
             // TourLocation
             // 
+            TourLocation.DataPropertyName = "Location";
             TourLocation.HeaderText = "Локация";
             TourLocation.Name = "TourLocation";
             // 
             // DepartureDate
             // 
+            DepartureDate.DataPropertyName = "DepartureDate";
             DepartureDate.HeaderText = "Дата вылета";
             DepartureDate.Name = "DepartureDate";
             // 
             // NightsNumber
             // 
+            NightsNumber.DataPropertyName = "NightCount";
             NightsNumber.HeaderText = "Кол-во ночей";
             NightsNumber.Name = "NightsNumber";
             // 
             // CostPerVacationer
             // 
+            CostPerVacationer.DataPropertyName = "CostPerVacationer";
             CostPerVacationer.HeaderText = "Стоимость за отдыхающего (руб)";
             CostPerVacationer.Name = "CostPerVacationer";
             // 
             // VacotionerCount
             // 
+            VacotionerCount.DataPropertyName = "VacationerCount";
             VacotionerCount.HeaderText = "Количество отдыхающих";
             VacotionerCount.Name = "VacotionerCount";
             // 
             // WiFiAvailable
             // 
+            WiFiAvailable.DataPropertyName = "WiFiAvailabble";
             WiFiAvailable.HeaderText = "Наличие Wi-Fi";
             WiFiAvailable.Name = "WiFiAvailable";
             // 
             // Surcharge
             // 
+            Surcharge.DataPropertyName = "Surcharge";
             Surcharge.HeaderText = "Доплаты (руб)";
             Surcharge.Name = "Surcharge";
             // 
@@ -89,13 +96,13 @@
             TotalPrice.HeaderText = "Общая стоимость";
             TotalPrice.Name = "TotalPrice";
             // 
-            // Form1
+            // TourForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1115, 591);
             Controls.Add(dataGridView1);
-            Name = "Form1";
+            Name = "TourForm";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

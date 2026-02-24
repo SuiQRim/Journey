@@ -75,7 +75,7 @@
             // 
             // VacotionerCount
             // 
-            VacotionerCount.DataPropertyName = "VacationerCount";
+            VacotionerCount.DataPropertyName = "VacotionerCount";
             VacotionerCount.HeaderText = "Количество отдыхающих";
             VacotionerCount.Name = "VacotionerCount";
             // 

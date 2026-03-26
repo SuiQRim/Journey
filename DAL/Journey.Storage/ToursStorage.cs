@@ -1,29 +1,21 @@
-﻿using System.ComponentModel;
-using Tours.Models;
+using Journey.Models;
 
-namespace Tours
+namespace Journey.Storage
 {
-    /// <summary>
-    /// Главная форма о туре
-    /// </summary>
-    public partial class TourForm : Form
+    public class ToursStorage
     {
+        public List<Tour> Tours { get; private set; }
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        public TourForm()
+        public ToursStorage()
         {
-            InitializeComponent();
-            LoadData();
+            FillTours();
         }
 
-        private void LoadData()
+        private void FillTours()
         {
-            BindingList<Tour> tours = new BindingList<Tour>
-            {
-                new Tour
-                {
+            Tours =
+            [
+                new() {
                     Id = 1,
                     Location = "Турция",
                     NightCount = 7,
@@ -33,8 +25,7 @@ namespace Tours
                     WiFiAvailabble = 1,
                     Surcharge = 1500.50m
                 },
-                new Tour
-                {
+                new() {
                     Id = 2,
                     Location = "Египет",
                     NightCount = 10,
@@ -44,8 +35,7 @@ namespace Tours
                     WiFiAvailabble = 1,
                     Surcharge = 2300.75m
                 },
-                new Tour
-                {
+                new() {
                     Id = 3,
                     Location = "Сочи",
                     NightCount = 5,
@@ -55,8 +45,7 @@ namespace Tours
                     WiFiAvailabble = 1,
                     Surcharge = 0m
                 },
-                new Tour
-                {
+                new() {
                     Id = 4,
                     Location = "Абхазия",
                     NightCount = 8,
@@ -66,8 +55,7 @@ namespace Tours
                     WiFiAvailabble = 0,
                     Surcharge = 800.25m
                 },
-                new Tour
-                {
+                new() {
                     Id = 5,
                     Location = "ОАЭ",
                     NightCount = 14,
@@ -77,11 +65,7 @@ namespace Tours
                     WiFiAvailabble = 1,
                     Surcharge = 3450.90m
                 }
-            };
-
-            dataGridView1.DataSource = tours;
-            dataGridView1.AutoResizeColumns();
+            ];
         }
-
     }
 }

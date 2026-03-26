@@ -1,4 +1,4 @@
-﻿namespace Tours.Models
+namespace Journey.Models
 {
     public class Tour
     {

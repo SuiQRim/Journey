@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Applications/">
+    <Project Path="Applications/JourneyWinforms/JourneyWinforms.csproj" />
+  </Folder>
+  <Folder Name="/BLL/" />
+  <Folder Name="/DAL/">
+    <Project Path="DAL/Journey.Storage/Journey.Storage.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="Models/Models.csproj" Id="e3d8d0eb-933c-4959-9f51-f2aa41a6fc01" />
+</Solution>

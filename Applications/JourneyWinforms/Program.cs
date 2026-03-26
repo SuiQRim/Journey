@@ -1,9 +1,11 @@
-﻿namespace Tours
+using Journey.Storage;
+
+namespace Journey.Applications.ToursWinforms
 {
     /// <summary>
     /// Класс с точкой входа
     /// </summary>
-    internal static class Program
+    static internal class Program
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -14,7 +16,8 @@
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new TourForm());
+            ToursStorage toursStorage = new();
+            Application.Run(new TourForm(toursStorage));
         }
     }
 }

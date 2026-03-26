@@ -1,4 +1,4 @@
-﻿namespace Tours
+namespace Journey.Applications.ToursWinforms
 {
     partial class TourForm
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            Id = new DataGridViewTextBoxColumn();
             TourLocation = new DataGridViewTextBoxColumn();
             DepartureDate = new DataGridViewTextBoxColumn();
             NightsNumber = new DataGridViewTextBoxColumn();
@@ -43,11 +44,17 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { TourLocation, DepartureDate, NightsNumber, CostPerVacationer, VacotionerCount, WiFiAvailable, Surcharge, TotalPrice });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Id, TourLocation, DepartureDate, NightsNumber, CostPerVacationer, VacotionerCount, WiFiAvailable, Surcharge, TotalPrice });
             dataGridView1.Location = new Point(12, 12);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(1091, 567);
             dataGridView1.TabIndex = 0;
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
             // 
             // TourLocation
             // 
@@ -111,6 +118,7 @@
         #endregion
 
         private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn TourLocation;
         private DataGridViewTextBoxColumn DepartureDate;
         private DataGridViewTextBoxColumn NightsNumber;

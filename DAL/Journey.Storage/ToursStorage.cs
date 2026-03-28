@@ -8,12 +8,12 @@ namespace Journey.Storage
 
         public ToursStorage()
         {
-            FillTours();
+            Tours = GenerateTours();
         }
 
-        private void FillTours()
+        private static List<Tour> GenerateTours()
         {
-            Tours =
+            return
             [
                 new() {
                     Id = 1,
@@ -22,7 +22,7 @@ namespace Journey.Storage
                     DepartureDate = DateTime.Parse("2024-06-15"),
                     CostPerVacationer = 45000,
                     VacotionerCount = 2,
-                    WiFiAvailabble = 1,
+                    WiFiAvailabble = true,
                     Surcharge = 1500.50m
                 },
                 new() {
@@ -32,7 +32,7 @@ namespace Journey.Storage
                     DepartureDate = DateTime.Parse("2024-07-20"),
                     CostPerVacationer = 62000,
                     VacotionerCount = 3,
-                    WiFiAvailabble = 1,
+                    WiFiAvailabble = false,
                     Surcharge = 2300.75m
                 },
                 new() {
@@ -42,7 +42,7 @@ namespace Journey.Storage
                     DepartureDate = DateTime.Parse("2024-08-05"),
                     CostPerVacationer = 28000,
                     VacotionerCount = 1,
-                    WiFiAvailabble = 1,
+                    WiFiAvailabble = true,
                     Surcharge = 0m
                 },
                 new() {
@@ -52,7 +52,7 @@ namespace Journey.Storage
                     DepartureDate = DateTime.Parse("2024-09-10"),
                     CostPerVacationer = 35000,
                     VacotionerCount = 4,
-                    WiFiAvailabble = 0,
+                    WiFiAvailabble = false,
                     Surcharge = 800.25m
                 },
                 new() {
@@ -62,7 +62,7 @@ namespace Journey.Storage
                     DepartureDate = DateTime.Parse("2024-10-01"),
                     CostPerVacationer = 89000,
                     VacotionerCount = 2,
-                    WiFiAvailabble = 1,
+                    WiFiAvailabble = true,
                     Surcharge = 3450.90m
                 }
             ];

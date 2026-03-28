@@ -14,9 +14,24 @@ namespace Journey.Models
 
         public int VacotionerCount { get; set; }
 
-        public int WiFiAvailabble { get; set; }
+        public bool WiFiAvailabble { get; set; }
 
         public decimal Surcharge { get; set; }
+
+        public decimal TotalPrice => CostPerVacationer * VacotionerCount * NightCount + Surcharge;
+
+        public decimal PricePerNight
+        {
+            get
+            {
+                if (NightCount == 0)
+                {
+                    return 0;
+                }
+
+                return TotalPrice / NightCount;
+            }
+        }
 
     }
 }

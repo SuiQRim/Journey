@@ -4,7 +4,8 @@
   </Folder>
   <Folder Name="/BLL/" />
   <Folder Name="/DAL/">
-    <Project Path="DAL/Journey.Storage/Journey.Storage.csproj" />
+    <Project Path="DAL/Journey.Storage.InMemory/Journey.Storage.InMemory.csproj" />
+    <Project Path="Journey.Storage.Contracts/Journey.Storage.Contracts.csproj" Id="d8e095af-9f61-4bb6-bbd3-9de45d1bcf9b" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />

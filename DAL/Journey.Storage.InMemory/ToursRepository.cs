@@ -1,15 +1,25 @@
 using Journey.Models;
+using Journey.Storage.Contracts;
 
-namespace Journey.Storage
+namespace Journey.Storage.InMemory
 {
-    public class ToursStorage
+    /// <summary>
+    /// Класс для взаимодейтсвия с хранилищем сущности тура
+    /// </summary>
+    public class ToursRepository : IToursRepository
     {
-        public List<Tour> Tours { get; private set; }
+        private readonly List<Tour> tours;
 
-        public ToursStorage()
+        /// <summary>
+        /// ctor
+        /// </summary>
+        public ToursRepository()
         {
-            Tours = GenerateTours();
+            tours = GenerateTours();
         }
+
+        /// <inheritdoc/>
+        public IEnumerable<Tour> GetTours() => tours;
 
         private static List<Tour> GenerateTours()
         {

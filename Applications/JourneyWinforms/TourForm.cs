@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using Journey.Models;
-using Journey.Storage;
+using Journey.Storage.Contracts;
 
 namespace Journey.Applications.ToursWinforms
 {
@@ -10,13 +10,12 @@ namespace Journey.Applications.ToursWinforms
     /// </summary>
     public partial class TourForm : Form
     {
-
-        private readonly ToursStorage toursStorage;
+        private readonly IToursRepository toursStorage;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public TourForm(ToursStorage toursStorage)
+        public TourForm(IToursRepository toursStorage)
         {
             InitializeComponent();
             this.toursStorage = toursStorage;
@@ -27,7 +26,7 @@ namespace Journey.Applications.ToursWinforms
 
         private void LoadData()
         {
-            var tours = new BindingList<Tour>(toursStorage.Tours);
+            var tours = new BindingList<Tour>([.. toursStorage.GetTours()]);
 
             ToursDataViewGrid.DataSource = tours;
             ToursDataViewGrid.AutoResizeColumns();

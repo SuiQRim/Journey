@@ -1,3 +1,4 @@
+using Journey.Services;
 using Journey.Storage.InMemory;
 
 namespace Journey.Applications.ToursWinforms
@@ -16,8 +17,9 @@ namespace Journey.Applications.ToursWinforms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            var toursStorage = new ToursRepository();
-            Application.Run(new TourForm(toursStorage));
+            var toursRepository = new ToursRepository();
+            var toursService = new ToursService(toursRepository);
+            Application.Run(new TourForm(toursService));
         }
     }
 }

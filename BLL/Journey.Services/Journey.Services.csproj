@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DAL\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
     <ProjectReference Include="..\..\Models\Models.csproj" />
-    <ProjectReference Include="..\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
+    <ProjectReference Include="..\Journey.Services.Contracts\Journey.Services.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

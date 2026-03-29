@@ -9,6 +9,7 @@ namespace Journey.Storage.InMemory
     public class ToursRepository : IToursRepository
     {
         private readonly List<Tour> tours;
+        private int idCouner;
 
         /// <summary>
         /// ctor
@@ -16,10 +17,19 @@ namespace Journey.Storage.InMemory
         public ToursRepository()
         {
             tours = GenerateTours();
+            idCouner = tours.Max(t => t.Id) + 1;
         }
 
         /// <inheritdoc/>
         public IEnumerable<Tour> GetTours() => tours;
+
+        /// <inheritdoc/>
+        public bool AddTour(Tour tour)
+        {
+            tour.Id = idCouner++;
+            tours.Add(tour);
+            return true;
+        }
 
         private static List<Tour> GenerateTours()
         {

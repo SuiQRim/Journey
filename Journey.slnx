@@ -2,10 +2,13 @@
   <Folder Name="/Applications/">
     <Project Path="Applications/JourneyWinforms/JourneyWinforms.csproj" />
   </Folder>
-  <Folder Name="/BLL/" />
+  <Folder Name="/BLL/">
+    <Project Path="BLL/Journey.Services.Contracts/Journey.Services.Contracts.csproj" />
+    <Project Path="BLL/Journey.Services/Journey.Services.csproj" />
+  </Folder>
   <Folder Name="/DAL/">
+    <Project Path="DAL/Journey.Storage.Contracts/Journey.Storage.Contracts.csproj" />
     <Project Path="DAL/Journey.Storage.InMemory/Journey.Storage.InMemory.csproj" />
-    <Project Path="Journey.Storage.Contracts/Journey.Storage.Contracts.csproj" Id="d8e095af-9f61-4bb6-bbd3-9de45d1bcf9b" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />

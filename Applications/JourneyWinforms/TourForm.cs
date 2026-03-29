@@ -1,7 +1,10 @@
 using System.ComponentModel;
 using System.Globalization;
 using Journey.Models;
+using Journey.Services;
+using Journey.Services.Contracts;
 using Journey.Storage.Contracts;
+using JourneyWinforms;
 
 namespace Journey.Applications.ToursWinforms
 {
@@ -10,15 +13,15 @@ namespace Journey.Applications.ToursWinforms
     /// </summary>
     public partial class TourForm : Form
     {
-        private readonly IToursRepository toursStorage;
+        private readonly ITourService toursService;
 
         /// <summary>
         /// ctor
         /// </summary>
-        public TourForm(IToursRepository toursStorage)
+        public TourForm(ITourService toursService)
         {
             InitializeComponent();
-            this.toursStorage = toursStorage;
+            this.toursService = toursService;
             ToursDataViewGrid.AutoGenerateColumns = false;
 
             LoadData();
@@ -26,7 +29,7 @@ namespace Journey.Applications.ToursWinforms
 
         private void LoadData()
         {
-            var tours = new BindingList<Tour>([.. toursStorage.GetTours()]);
+            var tours = new BindingList<Tour>([.. toursService.GetTours()]);
 
             ToursDataViewGrid.DataSource = tours;
             ToursDataViewGrid.AutoResizeColumns();
@@ -154,6 +157,20 @@ namespace Journey.Applications.ToursWinforms
             var b = (int)(startColor.B + (endColor.B - startColor.B) * ratio);
 
             return Color.FromArgb(r, g, b);
+        }
+
+        private void AddTourButton_Click(object sender, EventArgs e)
+        {
+            using var form = new AddTourForm();
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var tour = form.ResultTour;
+
+                toursService.AddTour(tour);
+
+                LoadData();
+            }
         }
     }
 }

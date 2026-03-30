@@ -28,5 +28,65 @@ namespace Journey.Services
 
         /// <inheritdoc/>
         public bool UpdateTour(Tour tour) => repository.UpdateTour(tour);
+
+        /// <inheritdoc/>
+        public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)
+        {
+            var list = tours.ToList();
+
+            if (list.Count == 0)
+            {
+                return new TourStatistics();
+            }
+
+            return new TourStatistics
+            {
+                AvgVacationers = list.Average(t => t.VacotionerCount),
+                WifiPercent = list.Count(t => t.WiFiAvailabble) * 100.0 / list.Count,
+                AvgSurchargePercent = list.Average(t =>
+                {
+                    var total = GetTotalPrice(t);
+                    return total == 0 ? 0 : (double)(t.Surcharge / total) * 100.0;
+                }),
+                TotalTours = list.Count,
+                MaxTourPrice = list.Max(GetTotalPrice),
+                AvgNights = list.Average(t => t.NightCount),
+                SurchargeShare = list.Count(t => t.Surcharge > 0) * 100.0 / list.Count
+            };
+        }
+
+        /// <inheritdoc/>
+        public decimal GetTotalPrice(Tour t)
+        {
+            return t.CostPerVacationer * t.VacotionerCount * t.NightCount + t.Surcharge;
+        }
+
+        /// <inheritdoc/>
+        public decimal GetPricePerNight(Tour tour)
+        {
+            if (tour.NightCount == 0)
+            {
+                return 0;
+            }
+
+            return GetTotalPrice(tour) / tour.NightCount;
+        }
+
+        /// <inheritdoc/>
+        public decimal GetNormalizedPrice(IEnumerable<Tour> tours, Tour target)
+        {
+            var getPrice = GetTotalPrice;
+
+            var prices = tours.Select(getPrice);
+
+            var min = prices.Min();
+            var max = prices.Max();
+
+            var total = getPrice(target);
+
+            return max == min
+                ? 1m
+                : (total - min) / (max - min);
+        }
     }
 }

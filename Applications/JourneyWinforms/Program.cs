@@ -18,8 +18,10 @@ namespace Journey.Applications.ToursWinforms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+
             var toursRepository = new ToursRepository();
             var toursService = new ToursService(toursRepository);
+
             Application.Run(new TourForm(toursService));
         }
     }

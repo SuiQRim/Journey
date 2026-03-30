@@ -1,3 +1,5 @@
+using JourneyWinforms.Properties;
+
 namespace Journey.Applications.JourneyWinforms.Forms
 {
     partial class TourForm
@@ -28,8 +30,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            var dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(TourForm));
+            var dataGridViewCellStyle3 = new DataGridViewCellStyle();
             ToursDataViewGrid = new DataGridView();
             Id = new DataGridViewTextBoxColumn();
             TourLocation = new DataGridViewTextBoxColumn();
@@ -41,11 +42,20 @@ namespace Journey.Applications.JourneyWinforms.Forms
             Surcharge = new DataGridViewTextBoxColumn();
             PricePerNight = new DataGridViewTextBoxColumn();
             TotalPrice = new DataGridViewTextBoxColumn();
-            toolStrip1 = new ToolStrip();
+            ToursMenu = new ToolStrip();
             AddTourButton = new ToolStripButton();
             EditStripButton = new ToolStripButton();
+            ToursStarusStrip = new StatusStrip();
+            AvgVacationersLabel = new ToolStripStatusLabel();
+            WifiPercentLabel = new ToolStripStatusLabel();
+            SurchargePercentLabel = new ToolStripStatusLabel();
+            TotalToursLabel = new ToolStripStatusLabel();
+            MaxPriceLabel = new ToolStripStatusLabel();
+            AvgNightsLabel = new ToolStripStatusLabel();
+            SurchargeShareLabel = new ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)ToursDataViewGrid).BeginInit();
-            toolStrip1.SuspendLayout();
+            ToursMenu.SuspendLayout();
+            ToursStarusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // ToursDataViewGrid
@@ -128,25 +138,25 @@ namespace Journey.Applications.JourneyWinforms.Forms
             // 
             // TotalPrice
             // 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
-            TotalPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            TotalPrice.DefaultCellStyle = dataGridViewCellStyle3;
             TotalPrice.HeaderText = "Общая стоимость";
             TotalPrice.Name = "TotalPrice";
             TotalPrice.ReadOnly = true;
             // 
-            // toolStrip1
+            // ToursMenu
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { AddTourButton, EditStripButton });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1115, 25);
-            toolStrip1.TabIndex = 1;
-            toolStrip1.Text = "toolStrip1";
+            ToursMenu.Items.AddRange(new ToolStripItem[] { AddTourButton, EditStripButton });
+            ToursMenu.Location = new Point(0, 0);
+            ToursMenu.Name = "ToursMenu";
+            ToursMenu.Size = new Size(1115, 25);
+            ToursMenu.TabIndex = 1;
+            ToursMenu.Text = "toolStrip1";
             // 
             // AddTourButton
             // 
             AddTourButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            AddTourButton.Image = (Image)resources.GetObject("AddTourButton.Image");
+            AddTourButton.Image = Resources.AddPic;
             AddTourButton.ImageTransparentColor = Color.Magenta;
             AddTourButton.Name = "AddTourButton";
             AddTourButton.Size = new Size(23, 22);
@@ -156,25 +166,79 @@ namespace Journey.Applications.JourneyWinforms.Forms
             // EditStripButton
             // 
             EditStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            EditStripButton.Image = (Image)resources.GetObject("EditStripButton.Image");
+            EditStripButton.Image = Resources.EditPic;
             EditStripButton.ImageTransparentColor = Color.Magenta;
             EditStripButton.Name = "EditStripButton";
             EditStripButton.Size = new Size(23, 22);
-            EditStripButton.Text = "toolStripButton2";
+            EditStripButton.Text = "EditStripButton";
             EditStripButton.Click += EditTourButton_Click;
+            // 
+            // ToursStarusStrip
+            // 
+            ToursStarusStrip.Items.AddRange(new ToolStripItem[] { AvgVacationersLabel, WifiPercentLabel, SurchargePercentLabel, TotalToursLabel, MaxPriceLabel, AvgNightsLabel, SurchargeShareLabel });
+            ToursStarusStrip.Location = new Point(0, 569);
+            ToursStarusStrip.Name = "ToursStarusStrip";
+            ToursStarusStrip.Size = new Size(1115, 22);
+            ToursStarusStrip.TabIndex = 2;
+            ToursStarusStrip.Text = "statusStrip1";
+            // 
+            // AvgVacationersLabel
+            // 
+            AvgVacationersLabel.Name = "AvgVacationersLabel";
+            AvgVacationersLabel.Size = new Size(116, 17);
+            AvgVacationersLabel.Text = "AvgVacationersLabel";
+            // 
+            // WifiPercentLabel
+            // 
+            WifiPercentLabel.Name = "WifiPercentLabel";
+            WifiPercentLabel.Size = new Size(96, 17);
+            WifiPercentLabel.Text = "WifiPercentLabel";
+            // 
+            // SurchargePercentLabel
+            // 
+            SurchargePercentLabel.Name = "SurchargePercentLabel";
+            SurchargePercentLabel.Size = new Size(128, 17);
+            SurchargePercentLabel.Text = "SurchargePercentLabel";
+            // 
+            // TotalToursLabel
+            // 
+            TotalToursLabel.Name = "TotalToursLabel";
+            TotalToursLabel.Size = new Size(88, 17);
+            TotalToursLabel.Text = "TotalToursLabel";
+            // 
+            // MaxPriceLabel
+            // 
+            MaxPriceLabel.Name = "MaxPriceLabel";
+            MaxPriceLabel.Size = new Size(84, 17);
+            MaxPriceLabel.Text = "MaxPriceLabel";
+            // 
+            // AvgNightsLabel
+            // 
+            AvgNightsLabel.Name = "AvgNightsLabel";
+            AvgNightsLabel.Size = new Size(91, 17);
+            AvgNightsLabel.Text = "AvgNightsLabel";
+            // 
+            // SurchargeShareLabel
+            // 
+            SurchargeShareLabel.Name = "SurchargeShareLabel";
+            SurchargeShareLabel.Size = new Size(117, 17);
+            SurchargeShareLabel.Text = "SurchargeShareLabel";
             // 
             // TourForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1115, 591);
-            Controls.Add(toolStrip1);
+            Controls.Add(ToursStarusStrip);
+            Controls.Add(ToursMenu);
             Controls.Add(ToursDataViewGrid);
             Name = "TourForm";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)ToursDataViewGrid).EndInit();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
+            ToursMenu.ResumeLayout(false);
+            ToursMenu.PerformLayout();
+            ToursStarusStrip.ResumeLayout(false);
+            ToursStarusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -192,8 +256,16 @@ namespace Journey.Applications.JourneyWinforms.Forms
         private DataGridViewTextBoxColumn Surcharge;
         private DataGridViewTextBoxColumn PricePerNight;
         private DataGridViewTextBoxColumn TotalPrice;
-        private ToolStrip toolStrip1;
+        private ToolStrip ToursMenu;
         private ToolStripButton AddTourButton;
         private ToolStripButton EditStripButton;
+        private StatusStrip ToursStarusStrip;
+        private ToolStripStatusLabel AvgVacationersLabel;
+        private ToolStripStatusLabel WifiPercentLabel;
+        private ToolStripStatusLabel SurchargePercentLabel;
+        private ToolStripStatusLabel TotalToursLabel;
+        private ToolStripStatusLabel MaxPriceLabel;
+        private ToolStripStatusLabel AvgNightsLabel;
+        private ToolStripStatusLabel SurchargeShareLabel;
     }
 }

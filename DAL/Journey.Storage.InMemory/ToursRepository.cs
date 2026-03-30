@@ -17,7 +17,7 @@ namespace Journey.Storage.InMemory
         public ToursRepository()
         {
             tours = GenerateTours();
-            idCouner = tours.Max(t => t.Id) + 1;
+            idCouner = tours.DefaultIfEmpty().Max(t => t?.Id ?? 0) + 1;
         }
 
         /// <inheritdoc/>

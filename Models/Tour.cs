@@ -53,27 +53,5 @@ namespace Journey.Models
         /// </summary>
         [Range(0, 1_000_000, ErrorMessage = "Доплата не может быть отрицательной")]
         public decimal Surcharge { get; set; }
-
-        /// <summary>
-        /// Цена за одну ночь
-        /// </summary>
-        public decimal PricePerNight
-        {
-            get
-            {
-                if (NightCount == 0)
-                {
-                    return 0;
-                }
-
-                return TotalPrice / NightCount;
-            }
-        }
-
-        /// <summary>
-        /// Итоговая цена тура
-        /// </summary>
-        public decimal TotalPrice =>
-            CostPerVacationer * VacotionerCount * NightCount + Surcharge;
     }
 }

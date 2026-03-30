@@ -1,5 +1,8 @@
 using System.ComponentModel;
 using System.Globalization;
+using Journey.Applications.JourneyWinforms.UI;
+using Journey.Applications.JourneyWinforms.UI.Formatter;
+using Journey.Applications.JourneyWinforms.UI.Renders;
 using Journey.Models;
 using Journey.Services.Contracts;
 
@@ -11,7 +14,6 @@ namespace Journey.Applications.JourneyWinforms.Forms
     public partial class TourForm : Form
     {
         private readonly ITourService toursService;
-
         private BindingList<Tour> toursBinding;
 
         /// <summary>
@@ -19,17 +21,31 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// </summary>
         public TourForm(ITourService toursService)
         {
-            InitializeComponent();
             this.toursService = toursService;
-            ToursDataViewGrid.AutoGenerateColumns = false;
 
+            InitializeComponent();
+
+            BindTours();
             LoadData();
+            UpdateStatistics(toursBinding);
+        }
+
+        private void BindTours()
+        {
+            toursBinding = [];
+            ToursDataViewGrid.AutoGenerateColumns = false;
+            ToursDataViewGrid.DataSource = toursBinding;
         }
 
         private void LoadData()
         {
-            toursBinding = [.. toursService.GetTours()];
-            ToursDataViewGrid.DataSource = toursBinding;
+            toursBinding.Clear();
+
+            foreach (var t in toursService.GetTours())
+            {
+                toursBinding.Add(t);
+            }
+
             ToursDataViewGrid.AutoResizeColumns();
         }
 
@@ -41,7 +57,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 if (ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is Tour tour)
                 {
-                    e.Value = tour.DepartureDate.ToString("dd MMMM yyyy", new CultureInfo("ru-RU"));
+                    e.Value = TourFormatter.FormatDate(tour.DepartureDate);
                 }
             }
 
@@ -49,7 +65,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 if (ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is Tour tour)
                 {
-                    e.Value = tour.WiFiAvailabble ? "Да" : "Нет";
+                    e.Value = TourFormatter.FormatWifi(tour.WiFiAvailabble);
                 }
             }
 
@@ -57,7 +73,8 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 if (ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is Tour tour)
                 {
-                    e.Value = tour.TotalPrice.ToString("N0", new CultureInfo("ru-RU")) + " ₽";
+                    var totalPrice = toursService.GetTotalPrice(tour);
+                    e.Value = TourFormatter.FormatMoney(totalPrice);
                 }
             }
 
@@ -65,9 +82,11 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 if (ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is Tour tour)
                 {
-                    e.Value = tour.PricePerNight.ToString("N0", new CultureInfo("ru-RU")) + " ₽";
+                    var perNight = toursService.GetPricePerNight(tour);
+                    e.Value = TourFormatter.FormatMoney(perNight);
                 }
             }
+
         }
 
         private void ToursDataViewGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -77,84 +96,12 @@ namespace Journey.Applications.JourneyWinforms.Forms
                 return;
             }
 
-            var columnName = ToursDataViewGrid.Columns[e.ColumnIndex].Name;
-
-            if (columnName == TotalPrice.Name)
+            if (ToursDataViewGrid.Columns[e.ColumnIndex].Name == TotalPrice.Name &&
+                ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is Tour tour &&
+                ToursDataViewGrid.DataSource is IEnumerable<Tour> data)
             {
-                PaintTotalPrice(e);
+                TourGridRenderer.PaintTotalPrice(e, tour, data, toursService);
             }
-        }
-
-        private void PaintTotalPrice(DataGridViewCellPaintingEventArgs e)
-        {
-            if (ToursDataViewGrid.Rows[e.RowIndex].DataBoundItem is not Tour tour)
-            {
-                return;
-            }
-
-            if (ToursDataViewGrid.DataSource is not IEnumerable<Tour> data || !data.Any())
-            {
-                return;
-            }
-
-            var total = tour.TotalPrice;
-
-            var min = data.Min(t => t.TotalPrice);
-            var max = data.Max(t => t.TotalPrice);
-
-            var percent = max == min ? 1m : (total - min) / (max - min);
-
-            e.PaintBackground(e.CellBounds, true);
-
-            var barWidth = (int)(e.CellBounds.Width * (double)percent);
-
-            Color color = GetGradientColor((double)percent);
-
-            using (var brush = new SolidBrush(color))
-            {
-                var rect = new Rectangle(
-                    e.CellBounds.X,
-                    e.CellBounds.Y + 2,
-                    barWidth,
-                    e.CellBounds.Height - 4
-                );
-
-                e.Graphics.FillRectangle(brush, rect);
-            }
-
-            var text = total.ToString("N0", new CultureInfo("ru-RU")) + " ₽";
-
-            TextRenderer.DrawText(
-                e.Graphics,
-                text,
-                e.CellStyle.Font,
-                e.CellBounds,
-                Color.Black,
-                TextFormatFlags.Right | TextFormatFlags.VerticalCenter
-            );
-
-            e.Handled = true;
-        }
-
-        private static Color GetGradientColor(double percent)
-        {
-            if (percent < 0.5)
-            {
-                return Interpolate(Color.Green, Color.Cyan, percent * 2);
-            }
-            else
-            {
-                return Interpolate(Color.Cyan, Color.MediumPurple, (percent - 0.5) * 2);
-            }
-        }
-
-        private static Color Interpolate(Color startColor, Color endColor, double ratio)
-        {
-            var red = (int)(startColor.R + (endColor.R - startColor.R) * ratio);
-            var green = (int)(startColor.G + (endColor.G - startColor.G) * ratio);
-            var blue = (int)(startColor.B + (endColor.B - startColor.B) * ratio);
-
-            return Color.FromArgb(red, green, blue);
         }
 
         private void AddTourButton_Click(object sender, EventArgs e)
@@ -166,8 +113,9 @@ namespace Journey.Applications.JourneyWinforms.Forms
                 var tour = form.ResultTour;
 
                 toursService.AddTour(tour);
+                toursBinding.Add(tour);
 
-                LoadData();
+                UpdateStatistics(toursBinding);
             }
         }
 
@@ -186,10 +134,17 @@ namespace Journey.Applications.JourneyWinforms.Forms
             if (form.ShowDialog() == DialogResult.OK && form.ResultTour != null)
             {
                 var updatedTour = form.ResultTour;
-
                 toursService.UpdateTour(updatedTour);
+                var index = toursBinding.ToList()
+                    .FindIndex(t => t.Id == updatedTour.Id);
 
-                LoadData();
+                if (index >= 0)
+                {
+                    toursBinding[index] = updatedTour;
+                    toursBinding.ResetBindings();
+                }
+
+                UpdateStatistics(toursBinding);
             }
         }
 
@@ -201,6 +156,26 @@ namespace Journey.Applications.JourneyWinforms.Forms
             }
 
             return null;
+        }
+
+        private void UpdateStatistics(IEnumerable<Tour> tours)
+        {
+            var stats = toursService.CalculateStatistics(tours);
+
+            var hasData = stats.TotalTours > 0;
+            ToursStarusStrip.Visible = hasData;
+            if (!hasData)
+            {
+                return;
+            }
+
+            AvgVacationersLabel.Text = $"{StatsLabels.AvgVacationers}: {stats.AvgVacationers:0.00}";
+            WifiPercentLabel.Text = $"{StatsLabels.WifiPercent}: {stats.WifiPercent:0.0}%";
+            SurchargePercentLabel.Text = $"{StatsLabels.SurchargePercent}: {stats.AvgSurchargePercent:0.0}%";
+            TotalToursLabel.Text = $"{StatsLabels.TotalTours}: {stats.TotalTours}";
+            MaxPriceLabel.Text = $"{StatsLabels.MaxPrice}: {stats.MaxTourPrice:0.00} ₽";
+            AvgNightsLabel.Text = $"{StatsLabels.AvgNights}: {stats.AvgNights:0.0}";
+            SurchargeShareLabel.Text = $"{StatsLabels.SurchargeShare}: {stats.SurchargeShare:0.0}%";
         }
     }
 }

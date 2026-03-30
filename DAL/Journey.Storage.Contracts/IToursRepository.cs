@@ -16,7 +16,14 @@ namespace Journey.Storage.Contracts
         /// Добавляет новый тур в хранилище
         /// </summary>
         /// <param name="tour">новый тур</param>
-        /// <returns>флаг успешности добавления</returns>
+        /// <returns>Успешность</returns>
         bool AddTour(Tour tour);
+
+        /// <summary>
+        /// Редактирует существующий тур
+        /// </summary>
+        /// <param name="tour">тур с обновленными данными</param>
+        /// <returns>Успешность</returns>
+        bool UpdateTour(Tour tour);
     }
 }

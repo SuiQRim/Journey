@@ -12,6 +12,8 @@ namespace Journey.Applications.JourneyWinforms.Forms
     {
         private readonly ITourService toursService;
 
+        private BindingList<Tour> toursBinding;
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -26,9 +28,8 @@ namespace Journey.Applications.JourneyWinforms.Forms
 
         private void LoadData()
         {
-            var tours = new BindingList<Tour>([.. toursService.GetTours()]);
-
-            ToursDataViewGrid.DataSource = tours;
+            toursBinding = [.. toursService.GetTours()];
+            ToursDataViewGrid.DataSource = toursBinding;
             ToursDataViewGrid.AutoResizeColumns();
         }
 
@@ -158,9 +159,9 @@ namespace Journey.Applications.JourneyWinforms.Forms
 
         private void AddTourButton_Click(object sender, EventArgs e)
         {
-            using var form = new AddTourForm();
+            using var form = new TourOptionForm();
 
-            if (form.ShowDialog() == DialogResult.OK)
+            if (form.ShowDialog() == DialogResult.OK && form.ResultTour != null)
             {
                 var tour = form.ResultTour;
 
@@ -168,6 +169,38 @@ namespace Journey.Applications.JourneyWinforms.Forms
 
                 LoadData();
             }
+        }
+
+        private void EditTourButton_Click(object sender, EventArgs e)
+        {
+            var selectedTour = GetSelectedTour();
+
+            if (selectedTour is null)
+            {
+                MessageBox.Show("Выберите тур для редактирования");
+                return;
+            }
+
+            using var form = new TourOptionForm(selectedTour);
+
+            if (form.ShowDialog() == DialogResult.OK && form.ResultTour != null)
+            {
+                var updatedTour = form.ResultTour;
+
+                toursService.UpdateTour(updatedTour);
+
+                LoadData();
+            }
+        }
+
+        private Tour? GetSelectedTour()
+        {
+            if (ToursDataViewGrid.CurrentRow?.DataBoundItem is Tour tour)
+            {
+                return tour;
+            }
+
+            return null;
         }
     }
 }

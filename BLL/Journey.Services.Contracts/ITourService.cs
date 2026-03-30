@@ -18,5 +18,12 @@ namespace Journey.Services.Contracts
         /// <param name="tour">тур который нужно добавить</param>
         /// <returns>Успешность</returns>
         bool AddTour(Tour tour);
+
+        /// <summary>
+        /// Редактирование существующего тура
+        /// </summary>
+        /// <param name="tour">тур с обновленными данными</param>
+        /// <returns>Успешность</returns>
+        bool UpdateTour(Tour tour);
     }
 }

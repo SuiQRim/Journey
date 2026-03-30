@@ -1,6 +1,6 @@
 namespace Journey.Applications.JourneyWinforms.Forms
 {
-    partial class AddTourForm
+    partial class TourOptionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             CostPerVacationerNUpDown = new NumericUpDown();
             VacotionerCountNUpDown = new NumericUpDown();
             SurchargeNUpDown = new NumericUpDown();
-            AcceptButton = new Button();
+            AcceptAddButton = new Button();
             LocationLabel = new Label();
             CostPerVacationerLabel = new Label();
             DepartureDateTimePicker = new DateTimePicker();
@@ -102,14 +102,14 @@ namespace Journey.Applications.JourneyWinforms.Forms
             // 
             // AcceptButton
             // 
-            AcceptButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AcceptButton.Location = new Point(163, 311);
-            AcceptButton.Name = "AcceptButton";
-            AcceptButton.Size = new Size(112, 31);
-            AcceptButton.TabIndex = 7;
-            AcceptButton.Text = "Добавить";
-            AcceptButton.UseVisualStyleBackColor = true;
-            AcceptButton.Click += AcceptButton_Click;
+            AcceptAddButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            AcceptAddButton.Location = new Point(163, 311);
+            AcceptAddButton.Name = "AcceptButton";
+            AcceptAddButton.Size = new Size(112, 31);
+            AcceptAddButton.TabIndex = 7;
+            AcceptAddButton.Text = "Добавить";
+            AcceptAddButton.UseVisualStyleBackColor = true;
+            AcceptAddButton.Click += AcceptButton_Click;
             // 
             // LocationLabel
             // 
@@ -235,7 +235,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             Controls.Add(VacotionerCountLabel);
             Controls.Add(CostPerVacationerLabel);
             Controls.Add(LocationLabel);
-            Controls.Add(AcceptButton);
+            Controls.Add(AcceptAddButton);
             Controls.Add(SurchargeNUpDown);
             Controls.Add(WiFiAvailableCheckBox);
             Controls.Add(VacotionerCountNUpDown);
@@ -243,6 +243,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             Controls.Add(DepartureDateTimePicker);
             Controls.Add(NightCountNUpDown);
             Controls.Add(LocationTextBox);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "AddTourForm";
             Text = "AddTourForm";
             ((System.ComponentModel.ISupportInitialize)NightCountNUpDown).EndInit();
@@ -261,7 +262,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
         private NumericUpDown CostPerVacationerNUpDown;
         private NumericUpDown VacotionerCountNUpDown;
         private NumericUpDown SurchargeNUpDown;
-        private Button AcceptButton;
+        private Button AcceptAddButton;
         private Label LocationLabel;
         private Label CostPerVacationerLabel;
         private DateTimePicker DepartureDateTimePicker;

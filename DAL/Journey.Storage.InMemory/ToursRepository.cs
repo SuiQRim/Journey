@@ -31,6 +31,27 @@ namespace Journey.Storage.InMemory
             return true;
         }
 
+        /// <inheritdoc/>
+        public bool UpdateTour(Tour tour)
+        {
+            var existing = tours.FirstOrDefault(x => x.Id == tour.Id);
+
+            if (existing is null)
+            {
+                return false;
+            }
+
+            existing.Location = tour.Location;
+            existing.DepartureDate = tour.DepartureDate;
+            existing.VacotionerCount = tour.VacotionerCount;
+            existing.WiFiAvailabble = tour.WiFiAvailabble;
+            existing.NightCount = tour.NightCount;
+            existing.CostPerVacationer = tour.CostPerVacationer;
+            existing.Surcharge = tour.Surcharge;
+
+            return true;
+        }
+
         private static List<Tour> GenerateTours()
         {
             return

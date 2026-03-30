@@ -21,16 +21,12 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Tour> GetTours()
-        {
-            return repository.GetTours();
-        }
+        public IEnumerable<Tour> GetTours() => repository.GetTours();
 
         /// <inheritdoc/>
-        public bool AddTour(Tour tour)
-        {
-            repository.AddTour(tour);
-            return true;
-        }
+        public bool AddTour(Tour tour) => repository.AddTour(tour);
+
+        /// <inheritdoc/>
+        public bool UpdateTour(Tour tour) => repository.UpdateTour(tour);
     }
 }

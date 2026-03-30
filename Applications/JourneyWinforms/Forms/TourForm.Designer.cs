@@ -43,7 +43,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             TotalPrice = new DataGridViewTextBoxColumn();
             toolStrip1 = new ToolStrip();
             AddTourButton = new ToolStripButton();
-            toolStripButton2 = new ToolStripButton();
+            EditStripButton = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)ToursDataViewGrid).BeginInit();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -57,6 +57,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             ToursDataViewGrid.Columns.AddRange(new DataGridViewColumn[] { Id, TourLocation, DepartureDate, VacotionerCount, WiFiAvailable, NightsNumber, CostPerVacationer, Surcharge, PricePerNight, TotalPrice });
             ToursDataViewGrid.Location = new Point(0, 28);
             ToursDataViewGrid.Name = "ToursDataViewGrid";
+            ToursDataViewGrid.ReadOnly = true;
             ToursDataViewGrid.Size = new Size(1115, 563);
             ToursDataViewGrid.TabIndex = 0;
             ToursDataViewGrid.CellFormatting += dataGridView1_CellFormatting;
@@ -67,54 +68,63 @@ namespace Journey.Applications.JourneyWinforms.Forms
             Id.DataPropertyName = "Id";
             Id.HeaderText = "Id";
             Id.Name = "Id";
+            Id.ReadOnly = true;
             // 
             // TourLocation
             // 
             TourLocation.DataPropertyName = "Location";
             TourLocation.HeaderText = "Локация";
             TourLocation.Name = "TourLocation";
+            TourLocation.ReadOnly = true;
             // 
             // DepartureDate
             // 
             DepartureDate.DataPropertyName = "DepartureDate";
             DepartureDate.HeaderText = "Дата вылета";
             DepartureDate.Name = "DepartureDate";
+            DepartureDate.ReadOnly = true;
             // 
             // VacotionerCount
             // 
             VacotionerCount.DataPropertyName = "VacotionerCount";
             VacotionerCount.HeaderText = "Количество отдыхающих";
             VacotionerCount.Name = "VacotionerCount";
+            VacotionerCount.ReadOnly = true;
             // 
             // WiFiAvailable
             // 
             WiFiAvailable.DataPropertyName = "WiFiAvailabble";
             WiFiAvailable.HeaderText = "Наличие Wi-Fi";
             WiFiAvailable.Name = "WiFiAvailable";
+            WiFiAvailable.ReadOnly = true;
             // 
             // NightsNumber
             // 
             NightsNumber.DataPropertyName = "NightCount";
             NightsNumber.HeaderText = "Кол-во ночей";
             NightsNumber.Name = "NightsNumber";
+            NightsNumber.ReadOnly = true;
             // 
             // CostPerVacationer
             // 
             CostPerVacationer.DataPropertyName = "CostPerVacationer";
             CostPerVacationer.HeaderText = "Стоимость за отдыхающего (руб)";
             CostPerVacationer.Name = "CostPerVacationer";
+            CostPerVacationer.ReadOnly = true;
             // 
             // Surcharge
             // 
             Surcharge.DataPropertyName = "Surcharge";
             Surcharge.HeaderText = "Доплаты (руб)";
             Surcharge.Name = "Surcharge";
+            Surcharge.ReadOnly = true;
             // 
             // PricePerNight
             // 
             PricePerNight.DataPropertyName = "PricePerNight";
             PricePerNight.HeaderText = "Цена за ночь";
             PricePerNight.Name = "PricePerNight";
+            PricePerNight.ReadOnly = true;
             // 
             // TotalPrice
             // 
@@ -122,10 +132,11 @@ namespace Journey.Applications.JourneyWinforms.Forms
             TotalPrice.DefaultCellStyle = dataGridViewCellStyle1;
             TotalPrice.HeaderText = "Общая стоимость";
             TotalPrice.Name = "TotalPrice";
+            TotalPrice.ReadOnly = true;
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { AddTourButton, toolStripButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { AddTourButton, EditStripButton });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1115, 25);
@@ -142,14 +153,15 @@ namespace Journey.Applications.JourneyWinforms.Forms
             AddTourButton.Text = "AddTour";
             AddTourButton.Click += AddTourButton_Click;
             // 
-            // toolStripButton2
+            // EditStripButton
             // 
-            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = (Image)resources.GetObject("toolStripButton2.Image");
-            toolStripButton2.ImageTransparentColor = Color.Magenta;
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new Size(23, 22);
-            toolStripButton2.Text = "toolStripButton2";
+            EditStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            EditStripButton.Image = (Image)resources.GetObject("EditStripButton.Image");
+            EditStripButton.ImageTransparentColor = Color.Magenta;
+            EditStripButton.Name = "EditStripButton";
+            EditStripButton.Size = new Size(23, 22);
+            EditStripButton.Text = "toolStripButton2";
+            EditStripButton.Click += EditTourButton_Click;
             // 
             // TourForm
             // 
@@ -182,6 +194,6 @@ namespace Journey.Applications.JourneyWinforms.Forms
         private DataGridViewTextBoxColumn TotalPrice;
         private ToolStrip toolStrip1;
         private ToolStripButton AddTourButton;
-        private ToolStripButton toolStripButton2;
+        private ToolStripButton EditStripButton;
     }
 }

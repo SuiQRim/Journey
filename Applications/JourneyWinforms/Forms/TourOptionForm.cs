@@ -6,7 +6,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
     /// <summary>
     /// Класс формы добавления и редактирования тура
     /// </summary>
-    public partial class AddTourForm : Form
+    public partial class TourOptionForm : Form
     {
 
         private Tour tour;
@@ -19,7 +19,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// <summary>
         /// ctor для добавления
         /// </summary>
-        public AddTourForm()
+        public TourOptionForm()
         {
             InitializeComponent();
 
@@ -36,12 +36,13 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// <summary>
         /// ctor для редактирования
         /// </summary>
-        public AddTourForm(Tour existingTour)
+        public TourOptionForm(Tour existingTour)
         {
             InitializeComponent();
 
             tour = new Tour
             {
+                Id = existingTour.Id,
                 Location = existingTour.Location,
                 NightCount = existingTour.NightCount,
                 DepartureDate = existingTour.DepartureDate,
@@ -54,7 +55,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             InitBindings();
 
             FormNameLabel.Text = "Редактирование тура";
-            AcceptButton.Text = "Сохранить";
+            AcceptAddButton.Text = "Сохранить";
         }
 
         /// <summary>

@@ -1,12 +1,9 @@
 using System.ComponentModel;
 using System.Globalization;
 using Journey.Models;
-using Journey.Services;
 using Journey.Services.Contracts;
-using Journey.Storage.Contracts;
-using JourneyWinforms;
 
-namespace Journey.Applications.ToursWinforms
+namespace Journey.Applications.JourneyWinforms.Forms
 {
     /// <summary>
     /// Главная форма о туре
@@ -152,11 +149,11 @@ namespace Journey.Applications.ToursWinforms
 
         private static Color Interpolate(Color startColor, Color endColor, double ratio)
         {
-            var r = (int)(startColor.R + (endColor.R - startColor.R) * ratio);
-            var g = (int)(startColor.G + (endColor.G - startColor.G) * ratio);
-            var b = (int)(startColor.B + (endColor.B - startColor.B) * ratio);
+            var red = (int)(startColor.R + (endColor.R - startColor.R) * ratio);
+            var green = (int)(startColor.G + (endColor.G - startColor.G) * ratio);
+            var blue = (int)(startColor.B + (endColor.B - startColor.B) * ratio);
 
-            return Color.FromArgb(r, g, b);
+            return Color.FromArgb(red, green, blue);
         }
 
         private void AddTourButton_Click(object sender, EventArgs e)

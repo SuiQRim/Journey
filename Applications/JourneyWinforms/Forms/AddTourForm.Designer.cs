@@ -1,4 +1,4 @@
-namespace JourneyWinforms
+namespace Journey.Applications.JourneyWinforms.Forms
 {
     partial class AddTourForm
     {
@@ -28,6 +28,7 @@ namespace JourneyWinforms
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             LocationTextBox = new TextBox();
             NightCountNUpDown = new NumericUpDown();
             CostPerVacationerNUpDown = new NumericUpDown();
@@ -43,18 +44,22 @@ namespace JourneyWinforms
             NightCountLabel = new Label();
             DepartureDateLabel = new Label();
             SurchargeLabel = new Label();
+            TourErrorProvider = new ErrorProvider(components);
+            ErrorsLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)NightCountNUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CostPerVacationerNUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)VacotionerCountNUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SurchargeNUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TourErrorProvider).BeginInit();
             SuspendLayout();
             // 
             // LocationTextBox
             // 
             LocationTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            LocationTextBox.Location = new Point(126, 81);
+            LocationTextBox.Location = new Point(145, 81);
+            LocationTextBox.MaxLength = 100;
             LocationTextBox.Name = "LocationTextBox";
-            LocationTextBox.Size = new Size(228, 23);
+            LocationTextBox.Size = new Size(209, 23);
             LocationTextBox.TabIndex = 0;
             // 
             // NightCountNUpDown
@@ -98,9 +103,9 @@ namespace JourneyWinforms
             // AcceptButton
             // 
             AcceptButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AcceptButton.Location = new Point(167, 311);
+            AcceptButton.Location = new Point(163, 311);
             AcceptButton.Name = "AcceptButton";
-            AcceptButton.Size = new Size(100, 31);
+            AcceptButton.Size = new Size(112, 31);
             AcceptButton.TabIndex = 7;
             AcceptButton.Text = "Добавить";
             AcceptButton.UseVisualStyleBackColor = true;
@@ -110,7 +115,7 @@ namespace JourneyWinforms
             // 
             LocationLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             LocationLabel.AutoSize = true;
-            LocationLabel.Location = new Point(66, 84);
+            LocationLabel.Location = new Point(85, 84);
             LocationLabel.Name = "LocationLabel";
             LocationLabel.Size = new Size(54, 15);
             LocationLabel.TabIndex = 8;
@@ -202,11 +207,27 @@ namespace JourneyWinforms
             SurchargeLabel.Text = "Доплата";
             SurchargeLabel.TextAlign = ContentAlignment.TopRight;
             // 
+            // TourErrorProvider
+            // 
+            TourErrorProvider.ContainerControl = this;
+            // 
+            // ErrorsLabel
+            // 
+            ErrorsLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ErrorsLabel.Font = new Font("Segoe UI", 8F);
+            ErrorsLabel.ForeColor = Color.Red;
+            ErrorsLabel.Location = new Point(85, 277);
+            ErrorsLabel.Name = "ErrorsLabel";
+            ErrorsLabel.Size = new Size(269, 31);
+            ErrorsLabel.TabIndex = 15;
+            ErrorsLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // AddTourForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(434, 354);
+            Controls.Add(ErrorsLabel);
             Controls.Add(SurchargeLabel);
             Controls.Add(DepartureDateLabel);
             Controls.Add(NightCountLabel);
@@ -228,6 +249,7 @@ namespace JourneyWinforms
             ((System.ComponentModel.ISupportInitialize)CostPerVacationerNUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)VacotionerCountNUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)SurchargeNUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TourErrorProvider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -238,7 +260,6 @@ namespace JourneyWinforms
         private NumericUpDown NightCountNUpDown;
         private NumericUpDown CostPerVacationerNUpDown;
         private NumericUpDown VacotionerCountNUpDown;
-        private CheckBox checkBox2;
         private NumericUpDown SurchargeNUpDown;
         private Button AcceptButton;
         private Label LocationLabel;
@@ -250,5 +271,7 @@ namespace JourneyWinforms
         private Label NightCountLabel;
         private Label DepartureDateLabel;
         private Label SurchargeLabel;
+        private ErrorProvider TourErrorProvider;
+        private Label ErrorsLabel;
     }
 }

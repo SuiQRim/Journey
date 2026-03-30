@@ -1,4 +1,4 @@
-namespace Journey.Applications.ToursWinforms
+namespace Journey.Applications.JourneyWinforms.Forms
 {
     partial class TourForm
     {

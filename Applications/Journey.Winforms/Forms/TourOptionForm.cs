@@ -27,7 +27,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 DepartureDate = DateTime.Now,
                 NightCount = 1,
-                VacotionerCount = 1
+                VacationerCount = 1
             };
 
             InitBindings();
@@ -47,7 +47,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
                 NightCount = existingTour.NightCount,
                 DepartureDate = existingTour.DepartureDate,
                 CostPerVacationer = existingTour.CostPerVacationer,
-                VacotionerCount = existingTour.VacotionerCount,
+                VacationerCount = existingTour.VacationerCount,
                 WiFiAvailabble = existingTour.WiFiAvailabble,
                 Surcharge = existingTour.Surcharge
             };
@@ -67,7 +67,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             NightCountNUpDown.AddBinding(x => x.Value, tour, x => x.NightCount, TourErrorProvider);
             DepartureDateTimePicker.AddBinding(x => x.Value, tour, x => x.DepartureDate, TourErrorProvider);
             CostPerVacationerNUpDown.AddBinding(x => x.Value, tour, x => x.CostPerVacationer, TourErrorProvider);
-            VacotionerCountNUpDown.AddBinding(x => x.Value, tour, x => x.VacotionerCount, TourErrorProvider);
+            VacotionerCountNUpDown.AddBinding(x => x.Value, tour, x => x.VacationerCount, TourErrorProvider);
             WiFiAvailableCheckBox.AddBinding(x => x.Checked, tour, x => x.WiFiAvailabble, TourErrorProvider);
             SurchargeNUpDown.AddBinding(x => x.Value, tour, x => x.Surcharge, TourErrorProvider);
         }

@@ -1,5 +1,8 @@
 namespace Journey.Applications.JourneyWinforms.UI
 {
+    /// <summary>
+    /// Класс формата вывода средних данных
+    /// </summary>
     public static class StatsLabels
     {
         public const string AvgVacationers = "👥 Сред. число";

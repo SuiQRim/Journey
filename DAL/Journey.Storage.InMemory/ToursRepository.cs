@@ -9,7 +9,7 @@ namespace Journey.Storage.InMemory
     public class ToursRepository : IToursRepository
     {
         private readonly List<Tour> tours;
-        private int idCouner;
+        private int idCounter;
 
         /// <summary>
         /// ctor
@@ -17,7 +17,7 @@ namespace Journey.Storage.InMemory
         public ToursRepository()
         {
             tours = GenerateTours();
-            idCouner = tours.DefaultIfEmpty().Max(t => t?.Id ?? 0) + 1;
+            idCounter = tours.DefaultIfEmpty().Max(t => t?.Id ?? 0) + 1;
         }
 
         /// <inheritdoc/>
@@ -26,7 +26,7 @@ namespace Journey.Storage.InMemory
         /// <inheritdoc/>
         public bool AddTour(Tour tour)
         {
-            tour.Id = idCouner++;
+            tour.Id = idCounter++;
             tours.Add(tour);
             return true;
         }
@@ -43,7 +43,7 @@ namespace Journey.Storage.InMemory
 
             existing.Location = tour.Location;
             existing.DepartureDate = tour.DepartureDate;
-            existing.VacotionerCount = tour.VacotionerCount;
+            existing.VacationerCount = tour.VacationerCount;
             existing.WiFiAvailabble = tour.WiFiAvailabble;
             existing.NightCount = tour.NightCount;
             existing.CostPerVacationer = tour.CostPerVacationer;
@@ -62,7 +62,7 @@ namespace Journey.Storage.InMemory
                     NightCount = 7,
                     DepartureDate = DateTime.Parse("2024-06-15"),
                     CostPerVacationer = 45000,
-                    VacotionerCount = 2,
+                    VacationerCount = 2,
                     WiFiAvailabble = true,
                     Surcharge = 1500.50m
                 },
@@ -72,7 +72,7 @@ namespace Journey.Storage.InMemory
                     NightCount = 10,
                     DepartureDate = DateTime.Parse("2024-07-20"),
                     CostPerVacationer = 62000,
-                    VacotionerCount = 3,
+                    VacationerCount = 3,
                     WiFiAvailabble = false,
                     Surcharge = 2300.75m
                 },
@@ -82,7 +82,7 @@ namespace Journey.Storage.InMemory
                     NightCount = 5,
                     DepartureDate = DateTime.Parse("2024-08-05"),
                     CostPerVacationer = 28000,
-                    VacotionerCount = 1,
+                    VacationerCount = 1,
                     WiFiAvailabble = true,
                     Surcharge = 0m
                 },
@@ -92,7 +92,7 @@ namespace Journey.Storage.InMemory
                     NightCount = 8,
                     DepartureDate = DateTime.Parse("2024-09-10"),
                     CostPerVacationer = 35000,
-                    VacotionerCount = 4,
+                    VacationerCount = 4,
                     WiFiAvailabble = false,
                     Surcharge = 800.25m
                 },
@@ -102,7 +102,7 @@ namespace Journey.Storage.InMemory
                     NightCount = 14,
                     DepartureDate = DateTime.Parse("2024-10-01"),
                     CostPerVacationer = 89000,
-                    VacotionerCount = 2,
+                    VacationerCount = 2,
                     WiFiAvailabble = true,
                     Surcharge = 3450.90m
                 }

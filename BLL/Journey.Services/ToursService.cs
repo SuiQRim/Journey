@@ -41,7 +41,7 @@ namespace Journey.Services
 
             return new TourStatistics
             {
-                AvgVacationers = list.Average(t => t.VacotionerCount),
+                AvgVacationers = list.Average(t => t.VacationerCount),
                 WifiPercent = list.Count(t => t.WiFiAvailabble) * 100.0 / list.Count,
                 AvgSurchargePercent = list.Average(t =>
                 {
@@ -58,7 +58,7 @@ namespace Journey.Services
         /// <inheritdoc/>
         public decimal GetTotalPrice(Tour t)
         {
-            return t.CostPerVacationer * t.VacotionerCount * t.NightCount + t.Surcharge;
+            return t.CostPerVacationer * t.VacationerCount * t.NightCount + t.Surcharge;
         }
 
         /// <inheritdoc/>

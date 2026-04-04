@@ -1,4 +1,4 @@
-using JourneyWinforms.Properties;
+using Journey.Winforms.Properties;
 
 namespace Journey.Applications.JourneyWinforms.Forms
 {

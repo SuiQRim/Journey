@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Globalization;
 using Journey.Applications.JourneyWinforms.UI;
 using Journey.Applications.JourneyWinforms.UI.Formatter;
 using Journey.Applications.JourneyWinforms.UI.Renders;

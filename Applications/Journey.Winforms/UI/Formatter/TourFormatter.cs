@@ -2,6 +2,9 @@ using System.Globalization;
 
 namespace Journey.Applications.JourneyWinforms.UI.Formatter
 {
+    /// <summary>
+    /// Класс работы с форматами данных для форм
+    /// </summary>
     public static class TourFormatter
     {
         private const string Currency = "₽";

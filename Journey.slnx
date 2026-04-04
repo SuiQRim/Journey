@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Applications/">
-    <Project Path="Applications/JourneyWinforms/JourneyWinforms.csproj" />
+    <Project Path="Applications/Journey.Winforms/Journey.Winforms.csproj" />
   </Folder>
   <Folder Name="/BLL/">
     <Project Path="BLL/Journey.Services.Contracts/Journey.Services.Contracts.csproj" />
@@ -13,5 +13,5 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
-  <Project Path="Models/Models.csproj" Id="e3d8d0eb-933c-4959-9f51-f2aa41a6fc01" />
+  <Project Path="Journey.Models/Journey.Models.csproj" />
 </Solution>

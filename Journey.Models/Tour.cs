@@ -22,7 +22,7 @@ namespace Journey.Models
         /// <summary>
         /// Количество ночей
         /// </summary>
-        [Range(1, 365, ErrorMessage = "Количество ночей должно быть от 1 до 30")]
+        [Range(1, 30, ErrorMessage = "Количество ночей должно быть от 1 до 30")]
         public int NightCount { get; set; }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace Journey.Models
         /// Количество отдыхающих
         /// </summary>
         [Range(1, 5, ErrorMessage = "Количество отдыхающих не должно превышать 5")]
-        public int VacotionerCount { get; set; }
+        public int VacationerCount { get; set; }
 
         /// <summary>
-        /// Наличия Wi-Fi на месте отдыха
+        /// Наличие Wi-Fi на месте отдыха
         /// </summary>
         public bool WiFiAvailabble { get; set; }
 

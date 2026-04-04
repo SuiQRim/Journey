@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Applications/">
+    <Project Path="Applications/Journey.Winforms/Journey.Winforms.csproj" />
+  </Folder>
+  <Folder Name="/BLL/">
+    <Project Path="BLL/Journey.Services.Contracts/Journey.Services.Contracts.csproj" />
+    <Project Path="BLL/Journey.Services/Journey.Services.csproj" />
+  </Folder>
+  <Folder Name="/DAL/">
+    <Project Path="DAL/Journey.Storage.Contracts/Journey.Storage.Contracts.csproj" />
+    <Project Path="DAL/Journey.Storage.InMemory/Journey.Storage.InMemory.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="Journey.Models/Journey.Models.csproj" />
+</Solution>

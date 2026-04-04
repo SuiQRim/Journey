@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
+    <ProjectReference Include="..\Journey.Services.Contracts\Journey.Services.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

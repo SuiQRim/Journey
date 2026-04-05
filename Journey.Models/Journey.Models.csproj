@@ -4,6 +4,21 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>Journey.Models</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/suiqrim/journey</RepositoryUrl>
+    <Version>1.0.2</Version>
+    <Authors>SuiQRim</Authors>
+    <Product>Journey App</Product>
+    <Description>Контракты и модели для приложения Journey</Description>
+    <PackageTags>journey;contracts;models</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  
 </Project>

@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Journey.Models\Journey.Models.csproj" />
-    <ProjectReference Include="..\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
+    <PackageReference Include="Journey.Storage.Contracts" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

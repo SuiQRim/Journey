@@ -13,5 +13,8 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Journey.Tests.Storage.InMemory/Journey.Tests.Storage.InMemory.csproj" />
+  </Folder>
   <Project Path="Journey.Models/Journey.Models.csproj" />
 </Solution>

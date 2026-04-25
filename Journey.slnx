@@ -14,6 +14,7 @@
     <File Path=".editorconfig" />
   </Folder>
   <Folder Name="/Tests/">
+    <Project Path="Tests/Journey.Tests.Services/Journey.Tests.Services.csproj" Id="44a0ec77-82ea-4330-9eed-b4bd59181582" />
     <Project Path="Tests/Journey.Tests.Storage.InMemory/Journey.Tests.Storage.InMemory.csproj" />
   </Folder>
   <Project Path="Journey.Models/Journey.Models.csproj" />

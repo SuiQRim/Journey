@@ -101,12 +101,7 @@ namespace Journey.Tests.Services
         public void CalculateStatistics_ShouldReturnCorrectStatistics()
         {
             // Arrange
-            var tours = new List<Tour>
-            {
-                new() { Id = 1, Location = "Италия", VacationerCount = 2, WiFiAvailabble = true, Surcharge = 100, CostPerVacationer = 500, NightCount = 2 },
-                new() { Id = 2, Location = "Испания", VacationerCount = 5, WiFiAvailabble = false, Surcharge = 0, CostPerVacationer = 400, NightCount = 10 },
-                new() { Id = 3, Location = "Греция", VacationerCount = 2, WiFiAvailabble = true, Surcharge = 200, CostPerVacationer = 1000, NightCount = 5 }
-            };
+            var tours = CreateStatisticsTours();
 
             var mockRepo = new Mock<IToursRepository>();
             var service = new ToursService(mockRepo.Object);
@@ -122,6 +117,43 @@ namespace Journey.Tests.Services
             stats.AvgSurchargePercent.Should().BeApproximately(2.24, 0.01);
             stats.AvgNights.Should().BeApproximately(5.67, 0.01);
             stats.SurchargeShare.Should().BeApproximately(66.67, 0.01);
+        }
+
+        private static List<Tour> CreateStatisticsTours()
+        {
+            return [
+
+                new()
+                {
+                    Id = 1,
+                    Location = "Италия",
+                    VacationerCount = 2,
+                    WiFiAvailabble = true,
+                    Surcharge = 100,
+                    CostPerVacationer = 500,
+                    NightCount = 2
+                },
+                new()
+                {
+                    Id = 2,
+                    Location = "Испания",
+                    VacationerCount = 5,
+                    WiFiAvailabble = false,
+                    Surcharge = 0,
+                    CostPerVacationer = 400,
+                    NightCount = 10
+                },
+                new()
+                {
+                    Id = 3,
+                    Location = "Греция",
+                    VacationerCount = 2,
+                    WiFiAvailabble = true,
+                    Surcharge = 200,
+                    CostPerVacationer = 1000,
+                    NightCount = 5
+                }
+            ];
         }
 
         /// <summary>

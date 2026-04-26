@@ -12,6 +12,11 @@ namespace Journey.Tests.Services
     public class ToursServiceTests
     {
         private readonly ToursService serviceWithEmptyRepositoryMock;
+
+
+        /// <summary>
+        /// ctor
+        /// </summary>
         public ToursServiceTests()
         {
             var mockRep = new Mock<IToursRepository>();

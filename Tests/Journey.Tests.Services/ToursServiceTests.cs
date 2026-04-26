@@ -11,6 +11,13 @@ namespace Journey.Tests.Services
     /// </summary>
     public class ToursServiceTests
     {
+        private readonly ToursService serviceWithEmptyRepositoryMock;
+        public ToursServiceTests()
+        {
+            var mockRep = new Mock<IToursRepository>();
+            serviceWithEmptyRepositoryMock = new ToursService(mockRep.Object);
+        }
+
         /// <summary>
         /// Проверяет, что метод <see cref="ToursService.AddTour(Tour)"/>\
         /// вызывает метод репозитория и возвращает его результат.
@@ -103,11 +110,8 @@ namespace Journey.Tests.Services
             // Arrange
             var tours = CreateStatisticsTours();
 
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
-
             // Act
-            var stats = service.CalculateStatistics(tours);
+            var stats = serviceWithEmptyRepositoryMock.CalculateStatistics(tours);
 
             // Assert
             stats.TotalTours.Should().Be(3);
@@ -165,11 +169,9 @@ namespace Journey.Tests.Services
         {
             // Arrange
             var tours = new List<Tour>();
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var stats = service.CalculateStatistics(tours);
+            var stats = serviceWithEmptyRepositoryMock.CalculateStatistics(tours);
 
             // Assert
             stats.TotalTours.Should().Be(0);
@@ -197,11 +199,9 @@ namespace Journey.Tests.Services
                 NightCount = 3,
                 Surcharge = 100
             };
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var totalPrice = service.GetTotalPrice(tour);
+            var totalPrice = serviceWithEmptyRepositoryMock.GetTotalPrice(tour);
 
             // Assert
             totalPrice.Should().Be(expectedPrice);
@@ -223,11 +223,9 @@ namespace Journey.Tests.Services
                 NightCount = 0,
                 Surcharge = 100
             };
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var totalPrice = service.GetTotalPrice(tour);
+            var totalPrice = serviceWithEmptyRepositoryMock.GetTotalPrice(tour);
 
             // Assert
             totalPrice.Should().Be(expectedPrice);
@@ -249,11 +247,9 @@ namespace Journey.Tests.Services
                 NightCount = 4,
                 Surcharge = 400,
             };
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var pricePerNight = service.GetPricePerNight(tour);
+            var pricePerNight = serviceWithEmptyRepositoryMock.GetPricePerNight(tour);
 
             // Assert
             pricePerNight.Should().Be(expectedPrice);
@@ -275,11 +271,9 @@ namespace Journey.Tests.Services
                 NightCount = 0,
                 Surcharge = 100
             };
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var pricePerNight = service.GetPricePerNight(tour);
+            var pricePerNight = serviceWithEmptyRepositoryMock.GetPricePerNight(tour);
 
             // Assert
             pricePerNight.Should().Be(0);
@@ -326,11 +320,8 @@ namespace Journey.Tests.Services
                 target
             };
 
-            var mockRepo = new Mock<IToursRepository>();
-            var service = new ToursService(mockRepo.Object);
-
             // Act
-            var result = service.GetNormalizedPrice(tours, target);
+            var result = serviceWithEmptyRepositoryMock.GetNormalizedPrice(tours, target);
 
             // Assert
             result.Should().BeApproximately((decimal)expected, 0.0001m);

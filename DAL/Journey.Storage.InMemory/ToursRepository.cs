@@ -12,13 +12,15 @@ namespace Journey.Storage.InMemory
         private int idCounter;
 
         /// <summary>
-        /// ctor
+        /// Конструктор, который инициализирует коллекцию туров стандартными данными
         /// </summary>
         public ToursRepository()
         {
             tours = GenerateTours();
-            idCounter = tours.DefaultIfEmpty().Max(t => t?.Id ?? 0) + 1;
+            idCounter = GetActualId();
         }
+
+        private int GetActualId() => (tours?.Max(t => t?.Id ?? 0) ?? 0) + 1;
 
         /// <inheritdoc/>
         public IEnumerable<Tour> GetTours() => tours;

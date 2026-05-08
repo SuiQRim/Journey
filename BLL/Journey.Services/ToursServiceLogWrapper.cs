@@ -8,15 +8,15 @@ namespace Journey.Services
     /// <inheritdoc/>
     public class ToursServiceLogWrapper : ITourService
     {
-        private readonly ILogger logger;
         private readonly ITourService tourService;
+        private readonly ILogger<ToursServiceLogWrapper> logger;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="tourService">сервис тура</param>
         /// <param name="logger">логгер</param>
-        public ToursServiceLogWrapper(ITourService tourService, ILogger logger)
+        public ToursServiceLogWrapper(ITourService tourService, ILogger<ToursServiceLogWrapper> logger)
         {
             this.tourService = tourService;
             this.logger = logger;
@@ -31,7 +31,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}", nameof(GetTours), msTime, tours.Count());
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}",
+                nameof(GetTours),
+                msTime,
+                tours.Count());
 
             return tours;
         }
@@ -45,7 +48,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}", nameof(UpdateTour), msTime, result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}",
+                nameof(UpdateTour),
+                msTime,
+                result);
 
             return result;
         }
@@ -59,7 +65,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}", nameof(AddTour), msTime, result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
+                nameof(AddTour),
+                msTime,
+                result);
 
             return result;
         }
@@ -73,7 +82,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}", nameof(CalculateStatistics), msTime, @result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {@result}",
+                nameof(CalculateStatistics),
+                msTime,
+                result);
 
             return result;
         }
@@ -87,7 +99,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}", nameof(GetNormalizedPrice), msTime, @result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
+                nameof(GetNormalizedPrice),
+                msTime,
+                result);
 
             return result;
         }
@@ -101,7 +116,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}", nameof(GetPricePerNight), msTime, @result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
+                nameof(GetPricePerNight),
+                msTime,
+                result);
 
             return result;
         }
@@ -115,7 +133,10 @@ namespace Journey.Services
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
-            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}", nameof(GetTotalPrice), msTime, @result);
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
+                nameof(GetTotalPrice),
+                msTime,
+                result);
 
             return result;
         }

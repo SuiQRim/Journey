@@ -1,6 +1,7 @@
 using Journey.Applications.JourneyWinforms.Forms;
 using Journey.Services;
 using Journey.Storage.InMemory;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
 
@@ -31,7 +32,7 @@ namespace Journey.Applications.ToursWinforms
                 .CreateLogger();
 
             var microsoftLogger = new SerilogLoggerFactory(logger)
-                .CreateLogger(typeof(Program).FullName!);
+                .CreateLogger<ToursServiceLogWrapper>();
 
             var toursRepository = new ToursRepository();
             var toursService = new ToursService(toursRepository);

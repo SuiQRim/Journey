@@ -15,13 +15,13 @@ namespace Journey.Tests.Storage.InMemory
         /// и все идентификаторы уникальны и упорядочены по возрастанию.
         /// </summary>
         [Fact]
-        public void Constructor_ShouldInitializeDefaultTours_WhenNoParametersPassed()
+        public async Task Constructor_ShouldInitializeDefaultTours_WhenNoParametersPassed()
         {
             // Arrange
             var repo = new ToursRepository();
 
             // Act
-            var tours = repo.GetTours().ToList();
+            var tours = (await repo.GetToursAsync()).ToList();
 
             // Assert
             tours.Should().NotBeNullOrEmpty();
@@ -37,17 +37,17 @@ namespace Journey.Tests.Storage.InMemory
         /// включая ранее существующие и добавленные в процессе теста.
         /// </summary>
         [Fact]
-        public void GetTours_ShouldReturnAllAddedTours()
+        public async Task GetTours_ShouldReturnAllAddedTours()
         {
             // Arrange
             var repo = new ToursRepository();
-            var countBefore = repo.GetTours().Count();
+            var countBefore = (await repo.GetToursAsync()).Count();
 
-            repo.AddTour(new Tour() { Location = "Италия" });
-            repo.AddTour(new Tour() { Location = "Испания" });
+            await repo.AddTourAsync(new Tour() { Location = "Италия" });
+            await repo.AddTourAsync(new Tour() { Location = "Испания" });
 
             // Act
-            var result = repo.GetTours();
+            var result = await repo.GetToursAsync();
 
             // Assert
             result.Should().HaveCount(countBefore + 2)
@@ -61,17 +61,17 @@ namespace Journey.Tests.Storage.InMemory
         /// как следующий после максимального существующего.
         /// </summary>
         [Fact]
-        public void AddTour_ShouldAssignNextId_WhenRepositoryHasExistingData()
+        public async Task AddTour_ShouldAssignNextId_WhenRepositoryHasExistingData()
         {
             // Arrange
             var repo = new ToursRepository();
-            var maxIdBefore = repo.GetTours().Max(x => x.Id);
+            var maxIdBefore = (await repo.GetToursAsync()).Max(x => x.Id);
 
             // Act
-            repo.AddTour(new Tour());
+            await repo.AddTourAsync(new Tour());
 
             // Assert
-            var added = repo.GetTours().Last();
+            var added = (await repo.GetToursAsync()).Last();
             added.Id.Should().Be(maxIdBefore + 1);
         }
 
@@ -81,18 +81,18 @@ namespace Journey.Tests.Storage.InMemory
         /// уникальные идентификаторы в возрастающем порядке.
         /// </summary>
         [Fact]
-        public void AddTour_ShouldGenerateUniqueSequentialIds_WhenAddingMultipleTours()
+        public async Task AddTour_ShouldGenerateUniqueSequentialIds_WhenAddingMultipleTours()
         {
             // Arrange
             var repo = new ToursRepository();
-            var countBefore = repo.GetTours().Count();
+            var countBefore = (await repo.GetToursAsync()).Count();
 
             // Act
-            repo.AddTour(new Tour());
-            repo.AddTour(new Tour());
+            await repo.AddTourAsync(new Tour());
+            await repo.AddTourAsync(new Tour());
 
             // Assert
-            var ids = repo.GetTours().Select(x => x.Id);
+            var ids = (await repo.GetToursAsync()).Select(x => x.Id);
 
             ids.Should()
                .HaveCount(countBefore + 2)
@@ -106,7 +106,7 @@ namespace Journey.Tests.Storage.InMemory
         /// и возвращает true.
         /// </summary>
         [Fact]
-        public void AddTour_ShouldAddTourWithAllFieldsAndReturnTrue()
+        public async Task AddTour_ShouldAddTourWithAllFieldsAndReturnTrue()
         {
             // Arrange
             var repo = new ToursRepository();
@@ -134,12 +134,12 @@ namespace Journey.Tests.Storage.InMemory
             };
 
             // Act
-            var result = repo.AddTour(tour);
+            var result = await repo.AddTourAsync(tour);
 
             // Assert
             result.Should().BeTrue();
 
-            var actual = repo.GetTours().Single(x => x.Id == tour.Id);
+            var actual = (await repo.GetToursAsync()).Single(x => x.Id == tour.Id);
 
             actual.Should().BeEquivalentTo(expected, options =>
                 options.Excluding(x => x.Id));
@@ -154,7 +154,7 @@ namespace Journey.Tests.Storage.InMemory
         /// <remarks>Этот тест гарантирует, что при обновлении существующего тура все его свойства
         /// заменяются на новые значения, а идентификатор тура остается неизменным</remarks>
         [Fact]
-        public void UpdateTour_ShouldUpdateAllFields_WhenTourExists()
+        public async Task UpdateTour_ShouldUpdateAllFields_WhenTourExists()
         {
             // Arrange
             var repo = new ToursRepository();
@@ -170,7 +170,7 @@ namespace Journey.Tests.Storage.InMemory
                 Surcharge = 1000m
             };
 
-            repo.AddTour(original);
+            await repo.AddTourAsync(original);
 
             var updated = new Tour
             {
@@ -185,12 +185,12 @@ namespace Journey.Tests.Storage.InMemory
             };
 
             // Act
-            var result = repo.UpdateTour(updated);
+            var result = await repo.UpdateTourAsync(updated);
 
             // Assert
             result.Should().BeTrue();
 
-            var actual = repo.GetTours().Single(x => x.Id == original.Id);
+            var actual = (await repo.GetToursAsync()).Single(x => x.Id == original.Id);
 
             actual.Should().BeEquivalentTo(updated, options =>
                 options.Excluding(x => x.Id));
@@ -201,21 +201,21 @@ namespace Journey.Tests.Storage.InMemory
         /// что метод UpdateTour возвращает значение false, если обновляемый тур не найден.
         /// </summary>
         [Fact]
-        public void UpdateTour_ShouldReturnFalse_WhenTourNotFound()
+        public async Task UpdateTour_ShouldReturnFalse_WhenTourNotFound()
         {
             // Arrange
             var repo = new ToursRepository();
 
-            repo.AddTour(new Tour { Location = "Италия" });
+            await repo.AddTourAsync(new Tour { Location = "Италия" });
 
-            var toursBefore = repo.GetTours().ToList();
+            var toursBefore = (await repo.GetToursAsync()).ToList();
 
             // Act
-            var result = repo.UpdateTour(new Tour { Id = 999 });
+            var result = await repo.UpdateTourAsync(new Tour { Id = 999 });
 
             // Assert
             result.Should().BeFalse();
-            repo.GetTours().Should().BeEquivalentTo(toursBefore);
+            (await repo.GetToursAsync()).Should().BeEquivalentTo(toursBefore);
         }
     }
 }

@@ -10,21 +10,21 @@ namespace Journey.Services.Contracts
         /// <summary>
         /// Получение полного списка туров
         /// </summary>
-        IEnumerable<Tour> GetTours();
+        Task<IEnumerable<Tour>> GetToursAsync();
 
         /// <summary>
         /// Добавление нового тура
         /// </summary>
         /// <param name="tour">тур который нужно добавить</param>
         /// <returns>Успешность</returns>
-        bool AddTour(Tour tour);
+        Task<bool> AddTourAsync(Tour tour);
 
         /// <summary>
         /// Редактирование существующего тура
         /// </summary>
         /// <param name="tour">тур с обновленными данными</param>
         /// <returns>Успешность</returns>
-        bool UpdateTour(Tour tour);
+        Task<bool> UpdateTourAsync(Tour tour);
 
         /// <summary>
         /// Метод считает агрегированную статистику по списку туров

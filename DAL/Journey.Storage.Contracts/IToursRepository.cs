@@ -10,20 +10,20 @@ namespace Journey.Storage.Contracts
         /// <summary>
         /// Возвращает полный список всех туров
         /// </summary>
-        IEnumerable<Tour> GetTours();
+        Task<IEnumerable<Tour>> GetToursAsync();
 
         /// <summary>
         /// Добавляет новый тур в хранилище
         /// </summary>
         /// <param name="tour">новый тур</param>
         /// <returns>Успешность</returns>
-        bool AddTour(Tour tour);
+        Task<bool> AddTourAsync(Tour tour);
 
         /// <summary>
         /// Редактирует существующий тур
         /// </summary>
         /// <param name="tour">тур с обновленными данными</param>
         /// <returns>Успешность</returns>
-        bool UpdateTour(Tour tour);
+        Task<bool> UpdateTourAsync(Tour tour);
     }
 }

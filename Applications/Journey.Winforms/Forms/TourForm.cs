@@ -36,11 +36,11 @@ namespace Journey.Applications.JourneyWinforms.Forms
             ToursDataViewGrid.DataSource = toursBinding;
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
             toursBinding.Clear();
 
-            foreach (var t in toursService.GetTours())
+            foreach (var t in (await toursService.GetToursAsync()))
             {
                 toursBinding.Add(t);
             }
@@ -103,7 +103,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             }
         }
 
-        private void AddTourButton_Click(object sender, EventArgs e)
+        private async void AddTourButton_Click(object sender, EventArgs e)
         {
             using var form = new TourOptionForm();
 
@@ -111,14 +111,14 @@ namespace Journey.Applications.JourneyWinforms.Forms
             {
                 var tour = form.ResultTour;
 
-                toursService.AddTour(tour);
+                await toursService.AddTourAsync(tour);
                 toursBinding.Add(tour);
 
                 UpdateStatistics(toursBinding);
             }
         }
 
-        private void EditTourButton_Click(object sender, EventArgs e)
+        private async void EditTourButton_Click(object sender, EventArgs e)
         {
             var selectedTour = GetSelectedTour();
 
@@ -133,7 +133,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             if (form.ShowDialog() == DialogResult.OK && form.ResultTour != null)
             {
                 var updatedTour = form.ResultTour;
-                toursService.UpdateTour(updatedTour);
+                await toursService.UpdateTourAsync(updatedTour);
                 var index = toursBinding.ToList()
                     .FindIndex(t => t.Id == updatedTour.Id);
 

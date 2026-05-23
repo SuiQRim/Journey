@@ -23,9 +23,12 @@ namespace Journey.Applications.JourneyWinforms.Forms
             this.toursService = toursService;
 
             InitializeComponent();
+        }
 
+        private async void TourForm_Load(object sender, EventArgs e)
+        {
             BindTours();
-            LoadData();
+            await LoadData();
             UpdateStatistics(toursBinding);
         }
 
@@ -36,7 +39,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             ToursDataViewGrid.DataSource = toursBinding;
         }
 
-        private async void LoadData()
+        private async Task LoadData()
         {
             toursBinding.Clear();
 

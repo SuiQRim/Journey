@@ -30,12 +30,12 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            var dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            var dataGridViewCellStyle1 = new DataGridViewCellStyle();
             ToursDataViewGrid = new DataGridView();
             Id = new DataGridViewTextBoxColumn();
             TourLocation = new DataGridViewTextBoxColumn();
             DepartureDate = new DataGridViewTextBoxColumn();
-            VacotionerCount = new DataGridViewTextBoxColumn();
+            VacationerCount = new DataGridViewTextBoxColumn();
             WiFiAvailable = new DataGridViewTextBoxColumn();
             NightsNumber = new DataGridViewTextBoxColumn();
             CostPerVacationer = new DataGridViewTextBoxColumn();
@@ -64,7 +64,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             ToursDataViewGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ToursDataViewGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ToursDataViewGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ToursDataViewGrid.Columns.AddRange(new DataGridViewColumn[] { Id, TourLocation, DepartureDate, VacotionerCount, WiFiAvailable, NightsNumber, CostPerVacationer, Surcharge, PricePerNight, TotalPrice });
+            ToursDataViewGrid.Columns.AddRange(new DataGridViewColumn[] { Id, TourLocation, DepartureDate, VacationerCount, WiFiAvailable, NightsNumber, CostPerVacationer, Surcharge, PricePerNight, TotalPrice });
             ToursDataViewGrid.Location = new Point(0, 28);
             ToursDataViewGrid.Name = "ToursDataViewGrid";
             ToursDataViewGrid.ReadOnly = true;
@@ -94,12 +94,12 @@ namespace Journey.Applications.JourneyWinforms.Forms
             DepartureDate.Name = "DepartureDate";
             DepartureDate.ReadOnly = true;
             // 
-            // VacotionerCount
+            // VacationerCount
             // 
-            VacotionerCount.DataPropertyName = "VacotionerCount";
-            VacotionerCount.HeaderText = "Количество отдыхающих";
-            VacotionerCount.Name = "VacotionerCount";
-            VacotionerCount.ReadOnly = true;
+            VacationerCount.DataPropertyName = "VacationerCount";
+            VacationerCount.HeaderText = "Количество отдыхающих";
+            VacationerCount.Name = "VacationerCount";
+            VacationerCount.ReadOnly = true;
             // 
             // WiFiAvailable
             // 
@@ -138,8 +138,8 @@ namespace Journey.Applications.JourneyWinforms.Forms
             // 
             // TotalPrice
             // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            TotalPrice.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            TotalPrice.DefaultCellStyle = dataGridViewCellStyle1;
             TotalPrice.HeaderText = "Общая стоимость";
             TotalPrice.Name = "TotalPrice";
             TotalPrice.ReadOnly = true;
@@ -234,6 +234,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
             Controls.Add(ToursDataViewGrid);
             Name = "TourForm";
             Text = "Form1";
+            Load += TourForm_Load;
             ((System.ComponentModel.ISupportInitialize)ToursDataViewGrid).EndInit();
             ToursMenu.ResumeLayout(false);
             ToursMenu.PerformLayout();
@@ -246,16 +247,6 @@ namespace Journey.Applications.JourneyWinforms.Forms
         #endregion
 
         private DataGridView ToursDataViewGrid;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn TourLocation;
-        private DataGridViewTextBoxColumn DepartureDate;
-        private DataGridViewTextBoxColumn VacotionerCount;
-        private DataGridViewTextBoxColumn WiFiAvailable;
-        private DataGridViewTextBoxColumn NightsNumber;
-        private DataGridViewTextBoxColumn CostPerVacationer;
-        private DataGridViewTextBoxColumn Surcharge;
-        private DataGridViewTextBoxColumn PricePerNight;
-        private DataGridViewTextBoxColumn TotalPrice;
         private ToolStrip ToursMenu;
         private ToolStripButton AddTourButton;
         private ToolStripButton EditStripButton;
@@ -267,5 +258,15 @@ namespace Journey.Applications.JourneyWinforms.Forms
         private ToolStripStatusLabel MaxPriceLabel;
         private ToolStripStatusLabel AvgNightsLabel;
         private ToolStripStatusLabel SurchargeShareLabel;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn TourLocation;
+        private DataGridViewTextBoxColumn DepartureDate;
+        private DataGridViewTextBoxColumn VacationerCount;
+        private DataGridViewTextBoxColumn WiFiAvailable;
+        private DataGridViewTextBoxColumn NightsNumber;
+        private DataGridViewTextBoxColumn CostPerVacationer;
+        private DataGridViewTextBoxColumn Surcharge;
+        private DataGridViewTextBoxColumn PricePerNight;
+        private DataGridViewTextBoxColumn TotalPrice;
     }
 }

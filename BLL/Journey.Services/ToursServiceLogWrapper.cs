@@ -23,16 +23,16 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Tour> GetTours()
+        public async Task<IEnumerable<Tour>> GetToursAsync()
         {
             var watcher = Stopwatch.StartNew();
 
-            var tours = tourService.GetTours();
+            var tours = await tourService.GetToursAsync();
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
             logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}",
-                nameof(GetTours),
+                nameof(GetToursAsync),
                 msTime,
                 tours.Count());
 
@@ -40,16 +40,16 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public bool UpdateTour(Tour tour)
+        public async Task<bool> UpdateTourAsync(Tour tour)
         {
             var watcher = Stopwatch.StartNew();
 
-            var result = tourService.UpdateTour(tour);
+            var result = await tourService.UpdateTourAsync(tour);
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
             logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}",
-                nameof(UpdateTour),
+                nameof(UpdateTourAsync),
                 msTime,
                 result);
 
@@ -57,16 +57,16 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public bool AddTour(Tour tour)
+        public async Task<bool> AddTourAsync(Tour tour)
         {
             var watcher = Stopwatch.StartNew();
 
-            var result = tourService.AddTour(tour);
+            var result = await tourService.AddTourAsync(tour);
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
             logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
-                nameof(AddTour),
+                nameof(AddTourAsync),
                 msTime,
                 result);
 

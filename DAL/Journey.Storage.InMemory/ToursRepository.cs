@@ -23,10 +23,10 @@ namespace Journey.Storage.InMemory
         private int GetActualId() => (tours?.Max(t => t?.Id ?? 0) ?? 0) + 1;
 
         /// <inheritdoc/>
-        public IEnumerable<Tour> GetTours() => tours;
+        public async Task<IEnumerable<Tour>> GetToursAsync() => tours;
 
         /// <inheritdoc/>
-        public bool AddTour(Tour tour)
+        public async Task<bool> AddTourAsync(Tour tour)
         {
             tour.Id = idCounter++;
             tours.Add(tour);
@@ -34,7 +34,7 @@ namespace Journey.Storage.InMemory
         }
 
         /// <inheritdoc/>
-        public bool UpdateTour(Tour tour)
+        public async Task<bool> UpdateTourAsync(Tour tour)
         {
             var existing = tours.FirstOrDefault(x => x.Id == tour.Id);
 

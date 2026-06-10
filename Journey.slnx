@@ -8,6 +8,7 @@
   </Folder>
   <Folder Name="/DAL/">
     <Project Path="DAL/Journey.Storage.Contracts/Journey.Storage.Contracts.csproj" />
+    <Project Path="DAL/Journey.Storage.EFStorage/Journey.Storage.EFStorage.csproj" />
     <Project Path="DAL/Journey.Storage.InMemory/Journey.Storage.InMemory.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">

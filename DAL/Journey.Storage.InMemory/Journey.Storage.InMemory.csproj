@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Journey.Storage.Contracts" Version="1.0.0" />
+    <PackageReference Include="Journey.Storage.Contracts" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

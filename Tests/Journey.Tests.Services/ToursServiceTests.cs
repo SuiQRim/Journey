@@ -31,22 +31,22 @@ namespace Journey.Tests.Services
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void AddTour_ShouldCallRepository_AndReturnResult(bool repoResult)
+        public async Task AddTour_ShouldCallRepository_AndReturnResult(bool repoResult)
         {
             // Arrange
             var mockRep = new Mock<IToursRepository>();
             var tour = new Tour { Location = "Италия" };
-            mockRep.Setup(r => r.AddTour(tour))
-                   .Returns(repoResult);
+            mockRep.Setup(r => r.AddTourAsync(tour))
+                   .ReturnsAsync(repoResult);
 
             var service = new ToursService(mockRep.Object);
 
             // Act
-            var result = service.AddTour(tour);
+            var result = await service.AddTourAsync(tour);
 
             // Assert
             result.Should().Be(repoResult);
-            mockRep.Verify(r => r.AddTour(tour), Times.Once);
+            mockRep.Verify(r => r.AddTourAsync(tour), Times.Once);
         }
 
 
@@ -56,7 +56,7 @@ namespace Journey.Tests.Services
         /// туров.
         /// </summary>
         [Fact]
-        public void GetTours_ShouldCallRepository_AndReturnTours()
+        public async Task GetTours_ShouldCallRepository_AndReturnTours()
         {
             // Arrange
             var expected = new List<Tour>
@@ -66,17 +66,17 @@ namespace Journey.Tests.Services
             };
 
             var mockRep = new Mock<IToursRepository>();
-            mockRep.Setup(r => r.GetTours())
-                   .Returns(expected);
+            mockRep.Setup(r => r.GetToursAsync())
+                   .ReturnsAsync(expected);
 
             var service = new ToursService(mockRep.Object);
 
             // Act
-            var result = service.GetTours();
+            var result = await service.GetToursAsync();
 
             // Assert
             result.Should().BeEquivalentTo(expected);
-            mockRep.Verify(r => r.GetTours(), Times.Once);
+            mockRep.Verify(r => r.GetToursAsync(), Times.Once);
         }
 
         /// <summary>
@@ -87,22 +87,22 @@ namespace Journey.Tests.Services
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void UpdateTour_ShouldCallRepository_AndReturnResult(bool repoResult)
+        public async Task UpdateTour_ShouldCallRepository_AndReturnResult(bool repoResult)
         {
             // Arrange
             var mockRep = new Mock<IToursRepository>();
             var tour = new Tour { Id = 1, Location = "Италия" };
-            mockRep.Setup(r => r.UpdateTour(tour))
-                   .Returns(repoResult);
+            mockRep.Setup(r => r.UpdateTourAsync(tour))
+                   .ReturnsAsync(repoResult);
 
             var service = new ToursService(mockRep.Object);
 
             // Act
-            var result = service.UpdateTour(tour);
+            var result = await service.UpdateTourAsync(tour);
 
             // Assert
             result.Should().Be(repoResult);
-            mockRep.Verify(r => r.UpdateTour(tour), Times.Once);
+            mockRep.Verify(r => r.UpdateTourAsync(tour), Times.Once);
         }
 
         /// <summary>

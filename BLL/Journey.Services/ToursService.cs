@@ -21,13 +21,13 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Tour> GetTours() => repository.GetTours();
+        public async Task<IEnumerable<Tour>> GetToursAsync() => await repository.GetToursAsync();
 
         /// <inheritdoc/>
-        public bool AddTour(Tour tour) => repository.AddTour(tour);
+        public async Task<bool> AddTourAsync(Tour tour) => await repository.AddTourAsync(tour);
 
         /// <inheritdoc/>
-        public bool UpdateTour(Tour tour) => repository.UpdateTour(tour);
+        public async Task<bool> UpdateTourAsync(Tour tour) => await repository.UpdateTourAsync(tour);
 
         /// <inheritdoc/>
         public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)

@@ -1,0 +1,65 @@
+﻿@using Journey.Models
+@model List<Tour>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Список туров
+    </h2>
+
+    <table class="table table-striped table-hover table-bordered align-middle">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Локация</th>
+                <th>Ночей</th>
+                <th>Дата вылета</th>
+                <th>Цена за человека</th>
+                <th>Количество отдыхающих</th>
+                <th>Wi-Fi</th>
+                <th>Доплата</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var tour in Model)
+            {
+                <tr>
+
+                    <td>@tour.Id</td>
+
+                    <td>
+                        <a href="@Url.Action("Edit", "Tour", new { id = tour.Id })">@tour.Location</a>
+                    </td>
+
+                    <td>@tour.NightCount</td>
+
+                    <td>
+                        @tour.DepartureDate.ToString("dd.MM.yyyy")
+                    </td>
+
+                    <td>
+                        @tour.CostPerVacationer €
+                    </td>
+
+                    <td>
+                        @tour.VacationerCount
+                    </td>
+
+                    <td>
+                        @(tour.WiFiAvailabble ? "Да" : "Нет")
+                    </td>
+
+                    <td>
+                        @tour.Surcharge €
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

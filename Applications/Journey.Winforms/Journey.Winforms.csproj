@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BLL\Journey.Services\Journey.Services.csproj" />
+    <ProjectReference Include="..\..\DAL\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
     <ProjectReference Include="..\..\DAL\Journey.Storage.EFStorage\Journey.Storage.EFStorage.csproj" />
   </ItemGroup>
 

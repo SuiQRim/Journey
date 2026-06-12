@@ -1,4 +1,5 @@
 using Journey.Services.Contracts;
+using Journey.WebAppMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Journey.WebAppMVC.Controllers
@@ -13,9 +14,29 @@ namespace Journey.WebAppMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Collection()
+        public async Task<ActionResult> Collection(int page = 1)
         {
-            return View((await tourService.GetToursAsync()).ToList());
+            var pageSize = 10;
+
+            // Это надо на другой уровень, но я хотел попробовать пагинацию на сайте
+            var tours = await tourService.GetToursAsync();
+            var statistic = tourService.CalculateStatistics(tours);
+
+            var count = tours.Count();
+
+            tours = tours
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            var viewModel = new ToursCollectionViewModel()
+            {
+                Tours = tours,
+                Statistics = statistic,
+                Page = page,
+                TotalPages = (int)Math.Ceiling(count / (double)pageSize)
+            };
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -30,7 +51,7 @@ namespace Journey.WebAppMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Collection));
             }
             catch
             {
@@ -50,7 +71,7 @@ namespace Journey.WebAppMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Collection));
             }
             catch
             {
@@ -64,7 +85,7 @@ namespace Journey.WebAppMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Collection));
             }
             catch
             {

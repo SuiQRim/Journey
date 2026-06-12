@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BLL\Journey.Services.Contracts\Journey.Services.Contracts.csproj" />
     <ProjectReference Include="..\..\BLL\Journey.Services\Journey.Services.csproj" />
     <ProjectReference Include="..\..\DAL\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />

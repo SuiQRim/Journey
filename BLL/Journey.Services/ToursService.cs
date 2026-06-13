@@ -30,6 +30,9 @@ namespace Journey.Services
         public async Task<bool> UpdateTourAsync(Tour tour) => await repository.UpdateTourAsync(tour);
 
         /// <inheritdoc/>
+        public async Task<bool> RemoveTourAsync(int tourId) => await repository.RemoveTourAsync(tourId);
+
+        /// <inheritdoc/>
         public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)
         {
             var list = tours.ToList();

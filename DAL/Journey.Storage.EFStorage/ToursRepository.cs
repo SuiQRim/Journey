@@ -51,5 +51,21 @@ namespace Journey.Storage.EFStorage
 
             return true;
         }
+
+        /// <inheritdoc/>
+        public async Task<bool> RemoveTourAsync(int tourId)
+        {
+            var tour = await reader.GetAll<Tour>().FirstOrDefaultAsync(t => t.Id == tourId);
+
+            if (tour == null)
+            {
+                return false;
+            }
+
+            writer.Remove(tour);
+            await writer.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

@@ -48,6 +48,7 @@ namespace Journey.WebAppMVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TourUpsertViewModel model)
         {
             if (!ModelState.IsValid)
@@ -129,8 +130,9 @@ namespace Journey.WebAppMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id)
         {
+            await tourService.RemoveTourAsync(id);
             return RedirectToAction(nameof(Collection));
         }
     }

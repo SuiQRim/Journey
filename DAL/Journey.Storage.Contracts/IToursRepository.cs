@@ -25,5 +25,12 @@ namespace Journey.Storage.Contracts
         /// <param name="tour">тур с обновленными данными</param>
         /// <returns>Успешность</returns>
         Task<bool> UpdateTourAsync(Tour tour);
+
+        /// <summary>
+        /// Удаляет тур по его идентификатору
+        /// </summary>
+        /// <param name="tourId">идентификатор тура</param>
+        /// <returns>Успешность</returns>
+        Task<bool> RemoveTourAsync(int tourId);
     }
 }

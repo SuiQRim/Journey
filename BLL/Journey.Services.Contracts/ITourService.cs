@@ -27,6 +27,13 @@ namespace Journey.Services.Contracts
         Task<bool> UpdateTourAsync(Tour tour);
 
         /// <summary>
+        /// Удаление тура по его идентификатору
+        /// </summary>
+        /// <param name="tourId">Идентификатор тура</param>
+        /// <returns>Успешность</returns>
+        Task<bool> RemoveTourAsync(int tourId);
+
+        /// <summary>
         /// Метод считает агрегированную статистику по списку туров
         /// </summary>
         /// <param name="tours">список туров</param>

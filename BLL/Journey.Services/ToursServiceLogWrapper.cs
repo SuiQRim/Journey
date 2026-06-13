@@ -74,6 +74,23 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
+        public async Task<bool> RemoveTourAsync(int tourId)
+        {
+            var watcher = Stopwatch.StartNew();
+
+            var result = await tourService.RemoveTourAsync(tourId);
+
+            watcher.Stop();
+            var msTime = watcher.ElapsedMilliseconds;
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {result}",
+                nameof(RemoveTourAsync),
+                msTime,
+                result);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)
         {
             var watcher = Stopwatch.StartNew();

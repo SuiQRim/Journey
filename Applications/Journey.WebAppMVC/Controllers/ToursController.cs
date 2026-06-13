@@ -1,4 +1,6 @@
+using Journey.Models;
 using Journey.Services.Contracts;
+using Journey.WebAppMVC.Constants;
 using Journey.WebAppMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +16,7 @@ namespace Journey.WebAppMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Collection(int page = 1)
+        public async Task<IActionResult> Collection(int page = 1)
         {
             var pageSize = 10;
 
@@ -40,57 +42,96 @@ namespace Journey.WebAppMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Create()
+        public IActionResult Create()
         {
-            return View();
+            return View(ViewNames.Upsert, new TourUpsertViewModel());
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection)
+        public async Task<IActionResult> Create(TourUpsertViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Collection));
+                return View(ViewNames.Upsert, model);
             }
-            catch
+
+            var tour = new Tour
             {
-                return View();
-            }
+                Location = model.Location,
+                NightCount = model.NightCount,
+                DepartureDate = model.DepartureDate,
+                CostPerVacationer = model.CostPerVacationer,
+                VacationerCount = model.VacationerCount,
+                WiFiAvailabble = model.WiFiAvailable,
+                Surcharge = model.Surcharge
+            };
+
+            await tourService.AddTourAsync(tour);
+
+            return RedirectToAction(nameof(Collection));
         }
+
 
         [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var tour = (await tourService.GetToursAsync()).SingleOrDefault(x => x.Id == id);
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            var model = new TourUpsertViewModel
+            {
+                Id = tour.Id,
+                Location = tour.Location,
+                NightCount = tour.NightCount,
+                DepartureDate = tour.DepartureDate,
+                CostPerVacationer = tour.CostPerVacationer,
+                VacationerCount = tour.VacationerCount,
+                WiFiAvailable = tour.WiFiAvailabble,
+                Surcharge = tour.Surcharge
+            };
+
+            return View(ViewNames.Upsert, model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(TourUpsertViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Collection));
+                return View(ViewNames.Upsert, model);
             }
-            catch
+
+            var tour = (await tourService.GetToursAsync()).SingleOrDefault(x => x.Id == model.Id);
+
+            if (tour == null)
             {
-                return View();
+                return NotFound();
             }
+
+            tour.Id = (int)model.Id!;
+            tour.Location = model.Location;
+            tour.NightCount = model.NightCount;
+            tour.DepartureDate = model.DepartureDate;
+            tour.CostPerVacationer = model.CostPerVacationer;
+            tour.VacationerCount = model.VacationerCount;
+            tour.WiFiAvailabble = model.WiFiAvailable;
+            tour.Surcharge = model.Surcharge;
+
+            await tourService.UpdateTourAsync(tour);
+
+            return RedirectToAction(nameof(Collection));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Collection));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Collection));
         }
     }
 }

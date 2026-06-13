@@ -1,0 +1,170 @@
+using Journey.Models;
+using Journey.Services.Contracts;
+using Journey.WebAppMVC.Constants;
+using Journey.WebAppMVC.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Journey.WebAppMVC.Controllers
+{
+    /// <summary>
+    /// Контроллер для управления турами, предоставляющий эндпоинты
+    /// </summary>
+    public class ToursController : Controller
+    {
+        private readonly ITourService tourService;
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="tourService">Сервис для работы с турами</param>
+        public ToursController(ITourService tourService)
+        {
+            this.tourService = tourService;
+        }
+
+        /// <summary>
+        /// Эндпоинт для отображения коллекции туров
+        /// </summary>
+        /// <param name="page">номер страницы с турами в пагинации</param>
+        /// <returns>Вид</returns>
+        [HttpGet]
+        public async Task<IActionResult> Collection(int page = 1)
+        {
+            var pageResult = await tourService.GetToursAsync(page);
+
+            var statistic = await tourService.CalculateStatisticsAsync();
+            var viewModel = new ToursCollectionViewModel
+            {
+                Tours = pageResult.Items,
+                Statistics = statistic,
+                Page = pageResult.Page,
+                TotalPages = pageResult.TotalPages
+            };
+
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// Эндпоинт для отображения формы создания тура
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new TourUpsertViewModel
+            {
+                DepartureDate = DateTime.Today
+            };
+            return View(ViewNames.Upsert, model);
+        }
+
+        /// <summary>
+        /// Эндпоинт для обработки данных формы создания тура
+        /// </summary>
+        /// <param name="model">Модель данных тура</param>
+        /// <returns>Редирект на коллекцию туров или вид с ошибками валидаци</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(TourUpsertViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(ViewNames.Upsert, model);
+            }
+
+            var tour = new Tour
+            {
+                Location = model.Location,
+                NightCount = model.NightCount,
+                DepartureDate = model.DepartureDate,
+                CostPerVacationer = model.CostPerVacationer,
+                VacationerCount = model.VacationerCount,
+                WiFiAvailabble = model.WiFiAvailable,
+                Surcharge = model.Surcharge
+            };
+
+            await tourService.AddTourAsync(tour);
+
+            return RedirectToAction(nameof(Collection));
+        }
+
+
+        /// <summary>
+        /// Эндпоинт для отображения формы редактирования тура
+        /// </summary>
+        /// <param name="id">Идентификатор тура</param>
+        /// <returns>Вид</returns>
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var tour = (await tourService.GetToursAsync()).SingleOrDefault(x => x.Id == id);
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            var model = new TourUpsertViewModel
+            {
+                Id = tour.Id,
+                Location = tour.Location,
+                NightCount = tour.NightCount,
+                DepartureDate = tour.DepartureDate,
+                CostPerVacationer = tour.CostPerVacationer,
+                VacationerCount = tour.VacationerCount,
+                WiFiAvailable = tour.WiFiAvailabble,
+                Surcharge = tour.Surcharge
+            };
+
+            return View(ViewNames.Upsert, model);
+        }
+
+        /// <summary>
+        /// Эндпоинт для обработки данных формы редактирования тура
+        /// </summary>
+        /// <param name="model">Модель данных тура</param>
+        /// <returns>Редирект на коллекцию туров или вид с ошибками валидации</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(TourUpsertViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(ViewNames.Upsert, model);
+            }
+
+            var tour = (await tourService.GetToursAsync()).SingleOrDefault(x => x.Id == model.Id);
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            tour.Id = (int)model.Id!;
+            tour.Location = model.Location;
+            tour.NightCount = model.NightCount;
+            tour.DepartureDate = model.DepartureDate;
+            tour.CostPerVacationer = model.CostPerVacationer;
+            tour.VacationerCount = model.VacationerCount;
+            tour.WiFiAvailabble = model.WiFiAvailable;
+            tour.Surcharge = model.Surcharge;
+
+            await tourService.UpdateTourAsync(tour);
+
+            return RedirectToAction(nameof(Collection));
+        }
+
+        /// <summary>
+        /// Эндпоинт для удаления тура
+        /// </summary>
+        /// <param name="id">Идентификатор тура</param>
+        /// <returns>Редирект на коллекцию туров</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await tourService.RemoveTourAsync(id);
+            return RedirectToAction(nameof(Collection));
+        }
+    }
+}

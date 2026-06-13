@@ -35,7 +35,7 @@ namespace Journey.Applications.ToursWinforms
                 .CreateLogger<ToursServiceLogWrapper>();
 
             var context = new JourneyContext();
-            var toursRepository = new ToursRepository(context);
+            var toursRepository = new ToursRepository(context, context);
             var toursService = new ToursService(toursRepository);
             var toursServiceLogWrapper = new ToursServiceLogWrapper(toursService, microsoftLogger);
 

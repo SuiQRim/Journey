@@ -9,7 +9,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PublishDocumentationFile>true</PublishDocumentationFile>
     <RepositoryUrl>https://github.com/suiqrim/journey</RepositoryUrl>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
     <Authors>SuiQRim</Authors>
     <Product>Journey App</Product>
     <Description>Контракты хранилища Journey</Description>
@@ -19,11 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Journey.Models" Version="1.0.2" />
+    <PackageReference Include="Journey.Models" Version="1.0.3" />
     <None Include="README.md" Pack="true" PackagePath="\" />
     <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-
-
-
+  
 </Project>

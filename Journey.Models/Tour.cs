@@ -22,7 +22,7 @@ namespace Journey.Models
         /// <summary>
         /// Количество ночей
         /// </summary>
-        [Range(1, 30, ErrorMessage = "Количество ночей должно быть от 1 до 30")]
+        [Range(1, 365, ErrorMessage = "Количество ночей должно быть от 1 до 365")]
         public int NightCount { get; set; }
 
         /// <summary>

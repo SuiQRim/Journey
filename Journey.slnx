@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Applications/">
+    <Project Path="Applications/Journey.WebAppMVC/Journey.WebAppMVC.csproj" Id="33f15869-d5bf-4987-98d6-75d5c10b1265" />
     <Project Path="Applications/Journey.Winforms/Journey.Winforms.csproj" />
   </Folder>
   <Folder Name="/BLL/">

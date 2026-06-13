@@ -1,0 +1,186 @@
+﻿@model Journey.WebAppMVC.Models.TourUpsertViewModel
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <h2 class="text-center mb-4">
+                @(Model.IsEdit ? "Редактирование тура" : "Создание тура")
+            </h2>
+
+            <form id="tourForm"
+                  asp-action="@(Model.IsEdit ? "Edit" : "Create")"
+                  method="post">
+
+                @if (Model.IsEdit)
+                {
+                    <input type="hidden" asp-for="Id" />
+                }
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Location" class="form-label">
+                        Локация
+                    </label>
+
+                    <input asp-for="Location"
+                        maxlength="100"
+                        class="form-control"
+                        required />
+
+                    <span asp-validation-for="Location"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NightCount" class="form-label">
+                        Количество ночей
+                    </label>
+
+                    <input asp-for="NightCount"
+                           type="number"
+                           min="1"
+                           step="1"
+                           max="365"
+                           required
+                           class="form-control" />
+
+                    <span asp-validation-for="NightCount"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DepartureDate" class="form-label">
+                        Дата вылета
+                    </label>
+
+                    <input asp-for="DepartureDate"
+                           type="date"
+                           required
+                           class="form-control" />
+
+                    <span asp-validation-for="DepartureDate"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CostPerVacationer" class="form-label">
+                        Цена за человека (₽)
+                    </label>
+
+                    <input asp-for="CostPerVacationer"
+                           type="number"
+                           required
+                           max="1000000"
+                           class="form-control" />
+
+                    <span asp-validation-for="CostPerVacationer"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="VacationerCount" class="form-label">
+                        Количество отдыхающих
+                    </label>
+
+                    <input asp-for="VacationerCount"
+                           type="number"
+                           min="1"
+                           step="1"
+                           max="5"
+                           required
+                           class="form-control" />
+
+                    <span asp-validation-for="VacationerCount"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="WiFiAvailable"
+                           class="form-check-input" />
+
+                    <label asp-for="WiFiAvailable"
+                           class="form-check-label">
+                        Wi-Fi доступен
+                    </label>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Surcharge" class="form-label">
+                        Доплата (₽)
+                    </label>
+
+                    <input asp-for="Surcharge"
+                           type="number"
+                           step="0.0001"
+                           min="0"
+                           max="1000000"
+                           class="form-control" />
+
+                    <span asp-validation-for="Surcharge"
+                          class="text-danger">
+                    </span>
+                </div>
+            </form>
+            <div class="d-flex gap-2">
+
+                <button form="tourForm"
+                        type="submit"
+                        class="btn btn-primary">
+                    Сохранить
+                </button>
+
+                <a asp-action="Collection"
+                       class="btn btn-secondary">
+                    Отмена
+                </a>
+
+                @if (Model.IsEdit)
+                {
+                    <form asp-action="Delete" method="post">
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Удалить
+                        </button>
+
+                    </form>
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll("input[type='number']");
+
+    inputs.forEach(input => {
+        input.addEventListener("input", function () {
+            if (this.value !== "") {
+                this.value = this.value.replace(/^0+(?=\d)/, '');
+            }
+        });
+    });
+});
+</script>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

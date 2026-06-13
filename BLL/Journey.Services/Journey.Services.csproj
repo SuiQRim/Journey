@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Journey.Services.Contracts" Version="1.0.2" />
-    <PackageReference Include="Journey.Storage.Contracts" Version="1.0.2" />
+    <PackageReference Include="Journey.Services.Contracts" Version="1.0.3" />
+    <PackageReference Include="Journey.Storage.Contracts" Version="1.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
   </ItemGroup>
 

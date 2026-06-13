@@ -9,25 +9,45 @@ namespace Journey.Storage.EFStorage
     /// </summary>
     public class ToursRepository : IToursRepository
     {
-        private readonly JourneyContext context;
+        private readonly IReader reader;
+        private readonly IWriter writer;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="context">Контекст базы данных</param>
-        public ToursRepository(JourneyContext context)
+        /// <param name="reader"></param>
+        /// <param name="writer"></param>
+        public ToursRepository(IReader reader, IWriter writer)
         {
-            this.context = context;
+            this.reader = reader;
+            this.writer = writer;
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<Tour>> GetToursAsync() => await context.Tours.ToArrayAsync();
+        public async Task<IEnumerable<Tour>> GetToursAsync() => await reader.GetAll<Tour>().ToArrayAsync();
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<Tour>> GetPagedAsync(int page, int pageSize)
+        {
+            return await reader.GetAll<Tour>()
+                .OrderBy(t => t.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> CountAsync()
+        {
+            return await reader.GetAll<Tour>().CountAsync();
+        }
+
 
         /// <inheritdoc/>
         public async Task<bool> AddTourAsync(Tour tour)
         {
-            await context.Tours.AddAsync(tour);
-            await context.SaveChangesAsync();
+            await writer.AddAsync(tour);
+            await writer.SaveChangesAsync();
 
             return true;
         }
@@ -35,18 +55,32 @@ namespace Journey.Storage.EFStorage
         /// <inheritdoc/>
         public async Task<bool> UpdateTourAsync(Tour tour)
         {
-            var existingTour = await context.Tours.FindAsync(tour.Id);
+            var existingTour = await reader.GetAll<Tour>().FirstOrDefaultAsync(t => t.Id == tour.Id);
 
             if (existingTour == null)
             {
                 return false;
             }
 
-            context.Entry(existingTour)
-                .CurrentValues
-                .SetValues(tour);
+            await writer.UpdateAsync(tour);
 
-            await context.SaveChangesAsync();
+            await writer.SaveChangesAsync();
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> RemoveTourAsync(int tourId)
+        {
+            var tour = await reader.GetAll<Tour>().FirstOrDefaultAsync(t => t.Id == tourId);
+
+            if (tour == null)
+            {
+                return false;
+            }
+
+            await writer.RemoveAsync(tour);
+            await writer.SaveChangesAsync();
 
             return true;
         }

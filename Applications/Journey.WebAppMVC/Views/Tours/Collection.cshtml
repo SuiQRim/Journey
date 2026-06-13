@@ -71,7 +71,11 @@
                     <td>@tour.Id</td>
 
                     <td>
-                        <a href="@Url.Action("Edit", "Tours", new { id = tour.Id })">@tour.Location</a>
+                        <a asp-controller="Tours"
+                               asp-action="Edit"
+                               asp-route-id="@tour.Id">
+                            @tour.Location
+                        </a>
                     </td>
 
                     <td>@tour.NightCount</td>

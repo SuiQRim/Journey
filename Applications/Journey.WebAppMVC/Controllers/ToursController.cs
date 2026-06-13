@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Journey.WebAppMVC.Controllers
 {
+    /// <summary>
+    /// Контроллер для управления турами, предоставляющий эндпоинты
+    /// </summary>
     public class ToursController : Controller
     {
         private readonly ITourService tourService;
@@ -15,6 +18,11 @@ namespace Journey.WebAppMVC.Controllers
             this.tourService = tourService;
         }
 
+        /// <summary>
+        /// Эндпоинт для отображения коллекции туров
+        /// </summary>
+        /// <param name="page">номер страницы с турами в пагинации</param>
+        /// <returns>Вид</returns>
         [HttpGet]
         public async Task<IActionResult> Collection(int page = 1)
         {
@@ -41,12 +49,25 @@ namespace Journey.WebAppMVC.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Эндпоинт для отображения формы создания тура
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create()
         {
-            return View(ViewNames.Upsert, new TourUpsertViewModel());
+            var model = new TourUpsertViewModel
+            {
+                DepartureDate = DateTime.Today
+            };
+            return View(ViewNames.Upsert, model);
         }
 
+        /// <summary>
+        /// Эндпоинт для обработки данных формы создания тура
+        /// </summary>
+        /// <param name="model">Модель данных тура</param>
+        /// <returns>Редирект на коллекцию туров или вид с ошибками валидаци</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TourUpsertViewModel model)
@@ -73,6 +94,11 @@ namespace Journey.WebAppMVC.Controllers
         }
 
 
+        /// <summary>
+        /// Эндпоинт для отображения формы редактирования тура
+        /// </summary>
+        /// <param name="id">Идентификатор тура</param>
+        /// <returns>Вид</returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -98,6 +124,11 @@ namespace Journey.WebAppMVC.Controllers
             return View(ViewNames.Upsert, model);
         }
 
+        /// <summary>
+        /// Эндпоинт для обработки данных формы редактирования тура
+        /// </summary>
+        /// <param name="model">Модель данных тура</param>
+        /// <returns>Редирект на коллекцию туров или вид с ошибками валидации</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TourUpsertViewModel model)
@@ -128,6 +159,11 @@ namespace Journey.WebAppMVC.Controllers
             return RedirectToAction(nameof(Collection));
         }
 
+        /// <summary>
+        /// Эндпоинт для удаления тура
+        /// </summary>
+        /// <param name="id">Идентификатор тура</param>
+        /// <returns>Редирект на коллекцию туров</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

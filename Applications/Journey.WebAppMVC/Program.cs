@@ -11,8 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<JourneyContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection")));
 
-builder.Services.AddScoped<IReader, JourneyContext>();
-builder.Services.AddScoped<IWriter, JourneyContext>();
+builder.Services.AddScoped<IReader>(provider => provider.GetRequiredService<JourneyContext>());
+builder.Services.AddScoped<IWriter>(provider => provider.GetRequiredService<JourneyContext>());
 builder.Services.AddScoped<IToursRepository, ToursRepository>();
 builder.Services.AddScoped<ITourService, ToursService>();
 

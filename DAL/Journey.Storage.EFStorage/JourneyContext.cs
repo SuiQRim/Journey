@@ -44,12 +44,10 @@ namespace Journey.Storage.EFStorage
             return true;
         }
 
-        public bool Update<TEntity>(TEntity currentEntity, TEntity newEntity)
+        public bool Update<TEntity>(TEntity entity)
             where TEntity : class
         {
-            Entry(currentEntity)
-                   .CurrentValues
-                   .SetValues(newEntity);
+            Set<TEntity>().Update(entity);
 
             return true;
         }

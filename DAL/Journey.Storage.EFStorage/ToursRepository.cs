@@ -45,7 +45,7 @@ namespace Journey.Storage.EFStorage
                 return false;
             }
 
-            writer.Update(existingTour, tour);
+            writer.Update(tour);
 
             await writer.SaveChangesAsync();
 

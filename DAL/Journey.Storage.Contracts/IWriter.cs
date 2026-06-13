@@ -18,7 +18,7 @@ namespace Journey.Storage.Contracts
         /// </summary>
         /// <param name="entity">сущность</param>
         /// <returns>Успешность операции</returns>
-        bool Update<TEntity>(TEntity currentEntity, TEntity newEntity)
+        bool Update<TEntity>(TEntity entity)
             where TEntity : class;
 
         /// <summary>

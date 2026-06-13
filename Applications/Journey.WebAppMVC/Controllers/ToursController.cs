@@ -13,6 +13,10 @@ namespace Journey.WebAppMVC.Controllers
     {
         private readonly ITourService tourService;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="tourService">Сервис для работы с турами</param>
         public ToursController(ITourService tourService)
         {
             this.tourService = tourService;
@@ -26,24 +30,15 @@ namespace Journey.WebAppMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Collection(int page = 1)
         {
-            var pageSize = 10;
+            var pageResult = await tourService.GetToursAsync(page);
 
-            // Это надо на другой уровень, но я хотел попробовать пагинацию на сайте
-            var tours = await tourService.GetToursAsync();
-            var statistic = tourService.CalculateStatistics(tours);
-
-            var count = tours.Count();
-
-            tours = tours
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
-
-            var viewModel = new ToursCollectionViewModel()
+            var statistic = await tourService.CalculateStatisticsAsync();
+            var viewModel = new ToursCollectionViewModel
             {
-                Tours = tours,
+                Tours = pageResult.Items,
                 Statistics = statistic,
-                Page = page,
-                TotalPages = (int)Math.Ceiling(count / (double)pageSize)
+                Page = pageResult.Page,
+                TotalPages = pageResult.TotalPages
             };
 
             return View(viewModel);

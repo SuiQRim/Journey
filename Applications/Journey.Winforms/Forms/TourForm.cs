@@ -117,7 +117,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
                 await toursService.AddTourAsync(tour);
                 toursBinding.Add(tour);
 
-                UpdateStatistics(toursBinding);
+                await UpdateStatistics(toursBinding);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
                     toursBinding.ResetBindings();
                 }
 
-                UpdateStatistics(toursBinding);
+                await UpdateStatistics(toursBinding);
             }
         }
 
@@ -160,9 +160,9 @@ namespace Journey.Applications.JourneyWinforms.Forms
             return null;
         }
 
-        private void UpdateStatistics(IEnumerable<Tour> tours)
+        private async Task UpdateStatistics(IEnumerable<Tour> tours)
         {
-            var stats = toursService.CalculateStatistics(tours);
+            var stats = await toursService.CalculateStatisticsAsync();
 
             var hasData = stats.TotalTours > 0;
             ToursStarusStrip.Visible = hasData;
@@ -178,6 +178,45 @@ namespace Journey.Applications.JourneyWinforms.Forms
             MaxPriceLabel.Text = $"{StatsLabels.MaxPrice}: {stats.MaxTourPrice:0.00} ₽";
             AvgNightsLabel.Text = $"{StatsLabels.AvgNights}: {stats.AvgNights:0.0}";
             SurchargeShareLabel.Text = $"{StatsLabels.SurchargeShare}: {stats.SurchargeShare:0.0}%";
+        }
+
+        private async void RemoveStripButton_Click(object sender, EventArgs e)
+        {
+            var selectedTour = GetSelectedTour();
+
+            if (selectedTour is null)
+            {
+                MessageBox.Show("Выберите тур для удаления");
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Удалить тур в {selectedTour.Location}?",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            await toursService.RemoveTourAsync(selectedTour.Id);
+
+            var item = toursBinding.FirstOrDefault(t => t.Id == selectedTour.Id);
+
+            if (item != null)
+            {
+                toursBinding.Remove(item);
+            }
+
+            await UpdateStatistics(toursBinding);
+        }
+
+        private async void RefreshStripButton_Click(object sender, EventArgs e)
+        {
+            await LoadData();
+            await UpdateStatistics(toursBinding);
         }
     }
 }

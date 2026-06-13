@@ -6,27 +6,30 @@ namespace Journey.Storage.Contracts
     public interface IWriter
     {
         /// <summary>
-        /// Добавление сущности
+        /// Добавление сущности в хранилище
         /// </summary>
-        /// <param name="entity">сущность</param>
-        /// <returns>Успешность операции</returns>
+        /// <typeparam name="TEntity">Сущность</typeparam>
+        /// <param name="entity">Сущность для добавления</param>
+        /// <returns>Результат операции добавления</returns>
         Task<bool> AddAsync<TEntity>(TEntity entity)
             where TEntity : class;
 
         /// <summary>
-        /// Изменение сущности
+        /// Обновление сущности
         /// </summary>
-        /// <param name="entity">сущность</param>
-        /// <returns>Успешность операции</returns>
-        bool Update<TEntity>(TEntity entity)
+        /// <typeparam name="TEntity">Сущность</typeparam>
+        /// <param name="entity">Сущность для обновления</param>
+        /// <returns>Результат операции обновления</returns>
+        Task<bool> UpdateAsync<TEntity>(TEntity entity)
             where TEntity : class;
 
         /// <summary>
         /// Удаление сущности
         /// </summary>
-        /// <param name="entity">сущность</param>
-        /// <returns>Успешность операции</returns>
-        bool Remove<TEntity>(TEntity entity)
+        /// <typeparam name="TEntity">Сущность</typeparam>
+        /// <param name="entity">Сущность для удаления</param>
+        /// <returns>Результат операции удаления</returns>
+        Task<bool> RemoveAsync<TEntity>(TEntity entity)
             where TEntity : class;
 
         /// <summary>

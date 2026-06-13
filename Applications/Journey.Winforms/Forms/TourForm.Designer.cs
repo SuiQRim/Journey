@@ -30,7 +30,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            var dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            var dataGridViewCellStyle3 = new DataGridViewCellStyle();
             ToursDataViewGrid = new DataGridView();
             Id = new DataGridViewTextBoxColumn();
             TourLocation = new DataGridViewTextBoxColumn();
@@ -45,6 +45,8 @@ namespace Journey.Applications.JourneyWinforms.Forms
             ToursMenu = new ToolStrip();
             AddTourButton = new ToolStripButton();
             EditStripButton = new ToolStripButton();
+            RemoveStripButton = new ToolStripButton();
+            RefreshStripButton = new ToolStripButton();
             ToursStarusStrip = new StatusStrip();
             AvgVacationersLabel = new ToolStripStatusLabel();
             WifiPercentLabel = new ToolStripStatusLabel();
@@ -138,15 +140,15 @@ namespace Journey.Applications.JourneyWinforms.Forms
             // 
             // TotalPrice
             // 
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
-            TotalPrice.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            TotalPrice.DefaultCellStyle = dataGridViewCellStyle3;
             TotalPrice.HeaderText = "Общая стоимость";
             TotalPrice.Name = "TotalPrice";
             TotalPrice.ReadOnly = true;
             // 
             // ToursMenu
             // 
-            ToursMenu.Items.AddRange(new ToolStripItem[] { AddTourButton, EditStripButton });
+            ToursMenu.Items.AddRange(new ToolStripItem[] { AddTourButton, EditStripButton, RemoveStripButton, RefreshStripButton });
             ToursMenu.Location = new Point(0, 0);
             ToursMenu.Name = "ToursMenu";
             ToursMenu.Size = new Size(1115, 25);
@@ -172,6 +174,26 @@ namespace Journey.Applications.JourneyWinforms.Forms
             EditStripButton.Size = new Size(23, 22);
             EditStripButton.Text = "EditStripButton";
             EditStripButton.Click += EditTourButton_Click;
+            // 
+            // RemoveStripButton
+            // 
+            RemoveStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            RemoveStripButton.Image = Resources.RemovePic;
+            RemoveStripButton.ImageTransparentColor = Color.Magenta;
+            RemoveStripButton.Name = "RemoveStripButton";
+            RemoveStripButton.Size = new Size(23, 22);
+            RemoveStripButton.Text = "toolStripButton1";
+            RemoveStripButton.Click += RemoveStripButton_Click;
+            // 
+            // RefreshStripButton
+            // 
+            RefreshStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            RefreshStripButton.Image = Resources.RefreshPic;
+            RefreshStripButton.ImageTransparentColor = Color.Magenta;
+            RefreshStripButton.Name = "RefreshStripButton";
+            RefreshStripButton.Size = new Size(23, 22);
+            RefreshStripButton.Text = "toolStripButton2";
+            RefreshStripButton.Click += RefreshStripButton_Click;
             // 
             // ToursStarusStrip
             // 
@@ -268,5 +290,7 @@ namespace Journey.Applications.JourneyWinforms.Forms
         private DataGridViewTextBoxColumn Surcharge;
         private DataGridViewTextBoxColumn PricePerNight;
         private DataGridViewTextBoxColumn TotalPrice;
+        private ToolStripButton RemoveStripButton;
+        private ToolStripButton RefreshStripButton;
     }
 }

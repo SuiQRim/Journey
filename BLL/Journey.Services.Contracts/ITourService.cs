@@ -13,6 +13,11 @@ namespace Journey.Services.Contracts
         Task<IEnumerable<Tour>> GetToursAsync();
 
         /// <summary>
+        /// Получение полного списка туров
+        /// </summary>
+        Task<PagedResult<Tour>> GetToursAsync(int page);
+
+        /// <summary>
         /// Добавление нового тура
         /// </summary>
         /// <param name="tour">тур который нужно добавить</param>
@@ -36,9 +41,8 @@ namespace Journey.Services.Contracts
         /// <summary>
         /// Метод считает агрегированную статистику по списку туров
         /// </summary>
-        /// <param name="tours">список туров</param>
         /// <returns>Статистика</returns>
-        TourStatistics CalculateStatistics(IEnumerable<Tour> tours);
+        Task<TourStatistics> CalculateStatisticsAsync();
 
         /// <summary>
         /// Считает итоговую цену тура

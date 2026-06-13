@@ -13,6 +13,20 @@ namespace Journey.Storage.Contracts
         Task<IEnumerable<Tour>> GetToursAsync();
 
         /// <summary>
+        /// Получает список туров для указанной страницы и размера страницы (для пагинации)
+        /// </summary>
+        /// <param name="page">номер страницы</param>
+        /// <param name="pageSize">размер страницы</param>
+        /// <returns>Список туров для указанной страницы</returns>
+        Task<IEnumerable<Tour>> GetPagedAsync(int page, int pageSize);
+
+        /// <summary>
+        /// Возвращает количество всех туров
+        /// </summary>
+        /// <returns>Количество туров</returns>
+        Task<int> CountAsync();
+
+        /// <summary>
         /// Добавляет новый тур в хранилище
         /// </summary>
         /// <param name="tour">новый тур</param>
@@ -32,5 +46,6 @@ namespace Journey.Storage.Contracts
         /// <param name="tourId">идентификатор тура</param>
         /// <returns>Успешность</returns>
         Task<bool> RemoveTourAsync(int tourId);
+
     }
 }

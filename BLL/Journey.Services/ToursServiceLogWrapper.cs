@@ -40,6 +40,23 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
+        public Task<PagedResult<Tour>> GetToursAsync(int page)
+        {
+            var watcher = Stopwatch.StartNew();
+
+            var result = tourService.GetToursAsync(page);
+
+            watcher.Stop();
+            var msTime = watcher.ElapsedMilliseconds;
+            logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Количество туров: {count}",
+                nameof(GetToursAsync),
+                msTime,
+                result.Result.Items.Count());
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public async Task<bool> UpdateTourAsync(Tour tour)
         {
             var watcher = Stopwatch.StartNew();
@@ -91,16 +108,16 @@ namespace Journey.Services
         }
 
         /// <inheritdoc/>
-        public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)
+        public async Task<TourStatistics> CalculateStatisticsAsync()
         {
             var watcher = Stopwatch.StartNew();
 
-            var result = tourService.CalculateStatistics(tours);
+            var result = await tourService.CalculateStatisticsAsync();
 
             watcher.Stop();
             var msTime = watcher.ElapsedMilliseconds;
             logger.LogDebug("Выполнение {метода}. Время выполнения заняло {ms} ms. Результат выполнения {@result}",
-                nameof(CalculateStatistics),
+                nameof(CalculateStatisticsAsync),
                 msTime,
                 result);
 
@@ -157,5 +174,6 @@ namespace Journey.Services
 
             return result;
         }
+
     }
 }

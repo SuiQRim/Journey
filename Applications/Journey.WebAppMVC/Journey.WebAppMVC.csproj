@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BLL\Journey.Services.Contracts\Journey.Services.Contracts.csproj" />
     <ProjectReference Include="..\..\BLL\Journey.Services\Journey.Services.csproj" />
-    <ProjectReference Include="..\..\DAL\Journey.Storage.Contracts\Journey.Storage.Contracts.csproj" />
     <ProjectReference Include="..\..\DAL\Journey.Storage.EFStorage\Journey.Storage.EFStorage.csproj" />
-    <ProjectReference Include="..\..\Journey.Models\Journey.Models.csproj" />
   </ItemGroup>
 
 </Project>

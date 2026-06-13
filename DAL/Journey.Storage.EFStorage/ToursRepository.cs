@@ -27,6 +27,23 @@ namespace Journey.Storage.EFStorage
         public async Task<IEnumerable<Tour>> GetToursAsync() => await reader.GetAll<Tour>().ToArrayAsync();
 
         /// <inheritdoc/>
+        public async Task<IEnumerable<Tour>> GetPagedAsync(int page, int pageSize)
+        {
+            return await reader.GetAll<Tour>()
+                .OrderBy(t => t.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> CountAsync()
+        {
+            return await reader.GetAll<Tour>().CountAsync();
+        }
+
+
+        /// <inheritdoc/>
         public async Task<bool> AddTourAsync(Tour tour)
         {
             await writer.AddAsync(tour);
@@ -45,7 +62,7 @@ namespace Journey.Storage.EFStorage
                 return false;
             }
 
-            writer.Update(tour);
+            await writer.UpdateAsync(tour);
 
             await writer.SaveChangesAsync();
 
@@ -62,7 +79,7 @@ namespace Journey.Storage.EFStorage
                 return false;
             }
 
-            writer.Remove(tour);
+            await writer.RemoveAsync(tour);
             await writer.SaveChangesAsync();
 
             return true;

@@ -35,7 +35,7 @@ namespace Journey.WebAppMVC.Models
         /// <summary>
         /// Стоимость за одного отдыхающего
         /// </summary>
-        [Range(1, 1_000_000, ErrorMessage = "Стоимость должна быть больше 0")]
+        [Range(1, 1_000_000, ErrorMessage = "Стоимость должна быть больше 0 и меньше 1_000_000")]
         public int CostPerVacationer { get; set; }
 
         /// <summary>

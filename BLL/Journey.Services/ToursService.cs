@@ -9,6 +9,7 @@ namespace Journey.Services
     /// </summary>
     public class ToursService : ITourService
     {
+        private const int PageSize = 10;
         private readonly IToursRepository repository;
 
         /// <summary>
@@ -24,6 +25,21 @@ namespace Journey.Services
         public async Task<IEnumerable<Tour>> GetToursAsync() => await repository.GetToursAsync();
 
         /// <inheritdoc/>
+        public async Task<PagedResult<Tour>> GetToursAsync(int page)
+        {
+            var items = await repository.GetPagedAsync(page, PageSize);
+            var totalCount = await repository.CountAsync();
+
+            return new PagedResult<Tour>
+            {
+                Items = items,
+                Page = page,
+                TotalCount = totalCount,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)PageSize)
+            };
+        }
+
+        /// <inheritdoc/>
         public async Task<bool> AddTourAsync(Tour tour) => await repository.AddTourAsync(tour);
 
         /// <inheritdoc/>
@@ -33,28 +49,36 @@ namespace Journey.Services
         public async Task<bool> RemoveTourAsync(int tourId) => await repository.RemoveTourAsync(tourId);
 
         /// <inheritdoc/>
-        public TourStatistics CalculateStatistics(IEnumerable<Tour> tours)
+        public async Task<TourStatistics> CalculateStatisticsAsync()
         {
-            var list = tours.ToList();
+            var tours = (await repository.GetToursAsync()).ToList();
 
-            if (list.Count == 0)
+            if (tours.Count == 0)
             {
                 return new TourStatistics();
             }
 
+            var total = tours.Count;
+
             return new TourStatistics
             {
-                AvgVacationers = list.Average(t => t.VacationerCount),
-                WifiPercent = list.Count(t => t.WiFiAvailabble) * 100.0 / list.Count,
-                AvgSurchargePercent = list.Average(t =>
+                TotalTours = total,
+                AvgVacationers = tours.Average(t => t.VacationerCount),
+                WifiPercent = tours.Count(t => t.WiFiAvailabble) * 100.0 / total,
+                AvgSurchargePercent = tours.Average(t =>
                 {
-                    var total = GetTotalPrice(t);
-                    return total == 0 ? 0 : (double)(t.Surcharge / total) * 100.0;
+                    var totalPrice = GetTotalPrice(t);
+
+                    if (totalPrice == 0)
+                    {
+                        return 0;
+                    }
+
+                    return (double)t.Surcharge / (double)totalPrice * 100.0;
                 }),
-                TotalTours = list.Count,
-                MaxTourPrice = list.Max(GetTotalPrice),
-                AvgNights = list.Average(t => t.NightCount),
-                SurchargeShare = list.Count(t => t.Surcharge > 0) * 100.0 / list.Count
+                MaxTourPrice = tours.Max(GetTotalPrice),
+                AvgNights = tours.Average(t => t.NightCount),
+                SurchargeShare = tours.Count(t => t.Surcharge > 0) * 100.0 / total
             };
         }
 

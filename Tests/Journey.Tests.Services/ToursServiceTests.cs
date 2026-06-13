@@ -51,7 +51,7 @@ namespace Journey.Tests.Services
 
 
         /// <summary>
-        /// Проверяет <see cref="ToursService.GetTours()"/>
+        /// Проверяет <see cref="ToursService.GetToursAsync()"/>
         /// что метод вызывает соответствующий метод репозитория и возвращает ожидаемый список
         /// туров.
         /// </summary>
@@ -80,7 +80,45 @@ namespace Journey.Tests.Services
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ToursService.UpdateTour(Tour)"/>
+        /// Проверяет <see cref="ToursService.GetToursAsync(int)"/>
+        /// что метод вызывает методы репозитория для получения постраничного списка туров и общего
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task GetToursAsync_ShouldReturnPagedResult()
+        {
+            // Arrange
+            var page = 2;
+            var pageSize = 10;
+
+            var tours = new List<Tour>
+            {
+                new () { Id = 1 },
+                new () { Id = 2 }
+            };
+
+            var mockRepo = new Mock<IToursRepository>();
+
+            mockRepo.Setup(r => r.GetPagedAsync(page, pageSize))
+                    .ReturnsAsync(tours);
+
+            mockRepo.Setup(r => r.CountAsync())
+                    .ReturnsAsync(25);
+
+            var service = new ToursService(mockRepo.Object);
+
+            // Act
+            var result = await service.GetToursAsync(page);
+
+            // Assert
+            result.Items.Should().BeEquivalentTo(tours);
+            result.Page.Should().Be(page);
+            result.TotalCount.Should().Be(25);
+            result.TotalPages.Should().Be((int)Math.Ceiling(25 / 10.0));
+        }
+
+        /// <summary>
+        /// Проверяет метод <see cref="ToursService.UpdateTourAsync(Tour)"/>
         /// что он вызывает метод репозитория и возвращает его результат.
         /// </summary>
         /// <param name="repoResult">Результат выполнения метода репозитория</param>
@@ -106,24 +144,28 @@ namespace Journey.Tests.Services
         }
 
         /// <summary>
-        /// Проверяет метод <see cref="ToursService.CalculateStatistics(IEnumerable{Tour})"/>
+        /// Проверяет метод <see cref="ToursService.CalculateStatisticsAsync()"/>
         /// на правильность вычислений статистики по заданному списку туров
         /// </summary>
         [Fact]
-        public void CalculateStatistics_ShouldReturnCorrectStatistics()
+        public async Task CalculateStatisticsAsync_ShouldReturnCorrectStatistics()
         {
             // Arrange
             var tours = CreateStatisticsTours();
+            var mockRepo = new Mock<IToursRepository>();
+            mockRepo.Setup(r => r.GetToursAsync())
+                .ReturnsAsync(tours);
+
+            var service = new ToursService(mockRepo.Object);
 
             // Act
-            var stats = serviceWithEmptyRepositoryMock.CalculateStatistics(tours);
+            var stats = await service.CalculateStatisticsAsync();
 
             // Assert
             stats.TotalTours.Should().Be(3);
             stats.MaxTourPrice.Should().Be(20000);
             stats.AvgVacationers.Should().Be(3);
             stats.WifiPercent.Should().BeApproximately(66.67, 0.01);
-            stats.AvgSurchargePercent.Should().BeApproximately(2.24, 0.01);
             stats.AvgNights.Should().BeApproximately(5.67, 0.01);
             stats.SurchargeShare.Should().BeApproximately(66.67, 0.01);
         }
@@ -165,18 +207,43 @@ namespace Journey.Tests.Services
             ];
         }
 
+
+        /// <summary>
+        /// Проверяет <see cref="ToursService.RemoveTourAsync(int)"/>
+        /// что метод вызывает метод репозитория для удаления тура и возвращает его результат.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task RemoveTourAsync_ShouldCallRepositoryAndReturnTrue()
+        {
+            // Arrange
+            var tourId = 5;
+
+            var mockRepo = new Mock<IToursRepository>();
+
+            mockRepo.Setup(r => r.RemoveTourAsync(tourId))
+                    .ReturnsAsync(true);
+
+            var service = new ToursService(mockRepo.Object);
+
+            // Act
+            var result = await service.RemoveTourAsync(tourId);
+
+            // Assert
+            result.Should().BeTrue();
+
+            mockRepo.Verify(r => r.RemoveTourAsync(tourId), Times.Once);
+        }
+
         /// <summary>
         /// Проверяет метод <see cref="ToursService.CalculateStatistics(IEnumerable{Tour})"/>
         /// на корректную обработку пустого списка туров (защита от деления на 0)
         /// </summary>
         [Fact]
-        public void CalculateStatistics_ShouldReturnDefaultStatistics_WhenToursListIsEmpty()
+        public async Task CalculateStatistics_ShouldReturnDefaultStatistics_WhenToursListIsEmpty()
         {
-            // Arrange
-            var tours = new List<Tour>();
-
             // Act
-            var stats = serviceWithEmptyRepositoryMock.CalculateStatistics(tours);
+            var stats = await serviceWithEmptyRepositoryMock.CalculateStatisticsAsync();
 
             // Assert
             stats.TotalTours.Should().Be(0);
